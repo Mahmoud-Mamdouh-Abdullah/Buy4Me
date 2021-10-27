@@ -36,60 +36,24 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getById = exports.all = exports.createUser = void 0;
-var User_Model_1 = require("../Data/Models/User.Model");
-var UserService_1 = require("../Services/UserService");
-var userService = new UserService_1.UserService();
-var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, name, email, password, address, user, result;
+exports.ConntectToMongo = void 0;
+var mongoose_1 = require("mongoose");
+var mongoUrl = 'mongodb://localhost:27017/e-commerce';
+var ConntectToMongo = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _a = req.body, name = _a.name, email = _a.email, password = _a.password, address = _a.address;
-                if (!name || !email || !password || !address) {
-                    return [2 /*return*/, res.send({ message: "some data is missing" })];
-                }
-                user = new User_Model_1.User({ name: name, email: email, password: password, address: address });
-                return [4 /*yield*/, userService.create(user)];
+                _b.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, (0, mongoose_1.connect)(mongoUrl)];
             case 1:
-                result = _b.sent();
-                if (!result) {
-                    return [2 /*return*/, res.send({ message: "An error occured, please try again later" })];
-                }
-                res.send(result);
-                return [2 /*return*/];
+                _b.sent();
+                return [3 /*break*/, 3];
+            case 2:
+                _a = _b.sent();
+                throw new Error('Failed to connect to server');
+            case 3: return [2 /*return*/];
         }
     });
 }); };
-exports.createUser = createUser;
-var all = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var users;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, userService.findAll()];
-            case 1:
-                users = _a.sent();
-                res.send({ users: users });
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.all = all;
-var getById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, user;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                id = req.params.id;
-                return [4 /*yield*/, userService.findById(id)];
-            case 1:
-                user = _a.sent();
-                if (!user) {
-                    return [2 /*return*/, res.send({ message: "ID '" + id + "' is invalid" })];
-                }
-                res.send({ user: user });
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.getById = getById;
+exports.ConntectToMongo = ConntectToMongo;

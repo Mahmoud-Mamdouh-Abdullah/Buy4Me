@@ -36,60 +36,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getById = exports.all = exports.createUser = void 0;
+exports.AuthService = void 0;
 var User_Model_1 = require("../Data/Models/User.Model");
-var UserService_1 = require("../Services/UserService");
-var userService = new UserService_1.UserService();
-var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, name, email, password, address, user, result;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _a = req.body, name = _a.name, email = _a.email, password = _a.password, address = _a.address;
-                if (!name || !email || !password || !address) {
-                    return [2 /*return*/, res.send({ message: "some data is missing" })];
+var Encryptor_1 = require("./Encryptor");
+var userRepo = new User_Model_1.UserRepository();
+var AuthService = /** @class */ (function () {
+    function AuthService() {
+    }
+    AuthService.prototype.login = function (email, password) {
+        return __awaiter(this, void 0, void 0, function () {
+            var user, encryptedPassword;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, userRepo.findUser({ email: email })];
+                    case 1:
+                        user = _a.sent();
+                        encryptedPassword = new Encryptor_1.Encryptor(password).encrypt();
+                        if (!user) {
+                            return [2 /*return*/, false];
+                        }
+                        if (user.password !== encryptedPassword) {
+                            return [2 /*return*/, false];
+                        }
+                        return [2 /*return*/, true];
                 }
-                user = new User_Model_1.User({ name: name, email: email, password: password, address: address });
-                return [4 /*yield*/, userService.create(user)];
-            case 1:
-                result = _b.sent();
-                if (!result) {
-                    return [2 /*return*/, res.send({ message: "An error occured, please try again later" })];
-                }
-                res.send(result);
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.createUser = createUser;
-var all = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var users;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, userService.findAll()];
-            case 1:
-                users = _a.sent();
-                res.send({ users: users });
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.all = all;
-var getById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, user;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                id = req.params.id;
-                return [4 /*yield*/, userService.findById(id)];
-            case 1:
-                user = _a.sent();
-                if (!user) {
-                    return [2 /*return*/, res.send({ message: "ID '" + id + "' is invalid" })];
-                }
-                res.send({ user: user });
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.getById = getById;
+            });
+        });
+    };
+    return AuthService;
+}());
+exports.AuthService = AuthService;

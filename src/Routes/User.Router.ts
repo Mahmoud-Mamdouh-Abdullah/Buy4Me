@@ -1,7 +1,7 @@
 import express, { IRouter } from "express";
+import { login } from "../Controllers/AuthController";
+import { all, createUser, getById } from "../Controllers/User.Controller";
 import { RouterInterface } from "../Core/Interfaces/Router.Interface";
-
-
 export class UserRouter implements RouterInterface{
     getPath(): string {
         return '/users';
@@ -9,8 +9,10 @@ export class UserRouter implements RouterInterface{
     getRouter(): IRouter {
         const router = express.Router();
 
-        router.get('/', );
-        router.get('/:id', );
+        router.get('/', all);
+        router.get('/:id', getById);
+        router.post('/', createUser);
+        router.post('/login', login);
 
         return router;
     }

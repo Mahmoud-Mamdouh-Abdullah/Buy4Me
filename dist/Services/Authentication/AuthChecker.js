@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,68 +47,71 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserService = void 0;
-var User_Model_1 = require("../Data/Models/User.Model");
-var Encryptor_1 = require("./Encryptor");
+exports.AuthChecker = void 0;
+var User_Model_1 = require("../../Data/Models/User.Model");
+var Encryptor_1 = require("../Encryptor");
+var TokenServiec_1 = require("./TokenServiec");
+var Token_Model_1 = require("../../Data/Models/Token.Model");
 var userRepo = new User_Model_1.UserRepository();
-var UserService = /** @class */ (function () {
-    function UserService() {
+var tokenService = new TokenServiec_1.TokenService();
+var AuthChecker = /** @class */ (function () {
+    function AuthChecker(email, password) {
+        this.email = email;
+        this.password = password;
     }
-    UserService.prototype.findAll = function (filter) {
-        if (filter === void 0) { filter = {}; }
+    AuthChecker.prototype.checkLogin = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var users;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, userRepo.find(filter)];
+            var _a, encryptedPassword;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = this;
+                        return [4 /*yield*/, userRepo.findUser({ email: this.email })];
                     case 1:
-                        users = _a.sent();
-                        if (users) {
-                            return [2 /*return*/, users];
+                        _a.user = _b.sent();
+                        encryptedPassword = new Encryptor_1.Encryptor(this.password).encrypt();
+                        if (!this.user) {
+                            return [2 /*return*/, false];
                         }
-                        return [2 /*return*/, false];
+                        if (this.user.password !== encryptedPassword) {
+                            return [2 /*return*/, false];
+                        }
+                        return [2 /*return*/, true];
                 }
             });
         });
     };
-    UserService.prototype.create = function (user) {
+    AuthChecker.prototype.generateToken = function () {
+        return new Encryptor_1.Encryptor(JSON.stringify(__assign(__assign({}, this.user), { date: new Date() }))).encrypt();
+    };
+    AuthChecker.prototype.saveTokenAndGet = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var encryptor, newUser;
+            var token, userToken, tokenObject;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        encryptor = new Encryptor_1.Encryptor(user.password);
-                        user.password = encryptor.encrypt();
-                        user.created_at = new Date().toISOString();
-                        user.updated_at = new Date().toISOString();
-                        return [4 /*yield*/, userRepo.createUser(user)];
+                        token = this.generateToken();
+                        return [4 /*yield*/, tokenService.findToken({ user_id: this.user._id })];
                     case 1:
-                        newUser = _a.sent();
-                        if (newUser) {
-                            return [2 /*return*/, newUser];
-                        }
-                        return [2 /*return*/, false];
+                        userToken = _a.sent();
+                        if (!userToken) return [3 /*break*/, 3];
+                        return [4 /*yield*/, tokenService.delete(userToken._id.toString())];
+                    case 2:
+                        _a.sent();
+                        _a.label = 3;
+                    case 3:
+                        tokenObject = new Token_Model_1.Token({
+                            token: token,
+                            user_id: this.user._id,
+                            created_at: new Date().toISOString(),
+                            updated_at: new Date().toISOString()
+                        });
+                        tokenService.create(tokenObject);
+                        return [2 /*return*/, token];
                 }
             });
         });
     };
-    UserService.prototype.findById = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            var user;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, userRepo.getUserById(id)];
-                    case 1:
-                        user = (_a.sent());
-                        console.log(user);
-                        if (user) {
-                            return [2 /*return*/, user];
-                        }
-                        return [2 /*return*/, false];
-                }
-            });
-        });
-    };
-    return UserService;
+    return AuthChecker;
 }());
-exports.UserService = UserService;
+exports.AuthChecker = AuthChecker;
