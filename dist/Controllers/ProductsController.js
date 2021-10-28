@@ -89,8 +89,27 @@ var all = function (req, res) { return __awaiter(void 0, void 0, void 0, functio
 }); };
 exports.all = all;
 var getByQuery = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var query, filter, products;
     return __generator(this, function (_a) {
-        return [2 /*return*/];
+        switch (_a.label) {
+            case 0:
+                query = req.params.query;
+                filter = {
+                    $or: [
+                        { title: { $regex: query, $options: 'i' } },
+                        { description: { $regex: query, $options: 'i' } },
+                        { category: { $regex: query, $options: 'i' } },
+                    ]
+                };
+                return [4 /*yield*/, productsService.find(filter)];
+            case 1:
+                products = _a.sent();
+                if (!products) {
+                    res.status(500).send('Internal server error, try again later');
+                }
+                res.send({ products: products, user: req.body.user });
+                return [2 /*return*/];
+        }
     });
 }); };
 exports.getByQuery = getByQuery;

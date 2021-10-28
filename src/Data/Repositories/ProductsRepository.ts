@@ -16,7 +16,8 @@ export class ProductsRepository {
         try {
             await ConntectToMongo();
             return (await Product.find(filter));
-        } catch (e) {
+        } catch (e: any) {
+            console.log(e.message);
             return false;
         }
     }

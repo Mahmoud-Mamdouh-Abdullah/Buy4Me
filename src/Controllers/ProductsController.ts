@@ -41,5 +41,18 @@ export const all = async (req: Request, res: Response) => {
 }
 
 export const getByQuery = async (req: Request, res: Response) => {
+    let query = req.params.query;
+    let filter = {
+        $or: [
+            { title: { $regex: query, $options: 'i' } },
+            { description: { $regex: query, $options: 'i' } },
+            { category: { $regex: query, $options: 'i' } },
+        ]
+    };
 
+    let products = await productsService.find(filter);
+    if (!products) {
+        res.status(500).send('Internal server error, try again later');
+    }
+    res.send({ products, user: req.body.user });
 }

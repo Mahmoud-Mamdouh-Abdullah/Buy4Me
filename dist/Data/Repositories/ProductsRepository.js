@@ -77,6 +77,7 @@ var ProductsRepository = /** @class */ (function () {
                     case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         e_2 = _a.sent();
+                        console.log(e_2.message);
                         return [2 /*return*/, false];
                     case 4: return [2 /*return*/];
                 }
