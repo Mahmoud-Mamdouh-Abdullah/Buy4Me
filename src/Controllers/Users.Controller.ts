@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { User } from "../Data/Models/User.Model";
-import { UserService } from "../Services/UserService";
+import { UsersService } from "../Services/UsersService";
 
-const userService = new UserService();
+const usersService = new UsersService();
 
 
 export const createUser = async (req: Request, res: Response) => {
@@ -11,7 +11,7 @@ export const createUser = async (req: Request, res: Response) => {
         return res.send({ message: "some data is missing" });
     }
     const user = new User({ name, email, password, address });
-    const result = await userService.create(user);
+    const result = await usersService.create(user);
     if(!result) {
         return res.send({ message: "An error occured, please try again later" });
     }
@@ -19,13 +19,13 @@ export const createUser = async (req: Request, res: Response) => {
 }
 
 export const all = async (req: Request, res: Response) => {
-    const users = await userService.findAll();
+    const users = await usersService.findAll();
     res.send({ users });
 }
 
 export const getById = async (req: Request, res: Response) => {
     let id = req.params.id;
-    let user = await userService.findById(id);
+    let user = await usersService.findById(id);
     if(!user) {
         return res.send({message:`ID '${id}' is invalid`});
     }

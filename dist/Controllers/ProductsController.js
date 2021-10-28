@@ -36,60 +36,61 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getById = exports.all = exports.createUser = void 0;
-var User_Model_1 = require("../Data/Models/User.Model");
-var UsersService_1 = require("../Services/UsersService");
-var usersService = new UsersService_1.UsersService();
-var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, name, email, password, address, user, result;
+exports.getByQuery = exports.all = exports.createProduct = void 0;
+var ProductsService_1 = require("../Services/ProductsService");
+var Product_Model_1 = require("../Data/Models/Product.Model");
+var productsService = new ProductsService_1.ProductsService();
+var createProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var images, imagesUrls, _a, title, description, price, category, product, savingRes;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _a = req.body, name = _a.name, email = _a.email, password = _a.password, address = _a.address;
-                if (!name || !email || !password || !address) {
-                    return [2 /*return*/, res.send({ message: "some data is missing" })];
+                images = req.files;
+                imagesUrls = images === null || images === void 0 ? void 0 : images.map(function (image) { return ({ url: image.path }); });
+                _a = req.body, title = _a.title, description = _a.description, price = _a.price, category = _a.category;
+                if (!title || !description || !price || !category || imagesUrls.length === 0) {
+                    return [2 /*return*/, res.status(400).send({ message: 'invalid or missing data' })];
                 }
-                user = new User_Model_1.User({ name: name, email: email, password: password, address: address });
-                return [4 /*yield*/, usersService.create(user)];
+                product = new Product_Model_1.Product({
+                    title: title,
+                    description: description,
+                    price: price,
+                    category: category,
+                    images: imagesUrls,
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                });
+                return [4 /*yield*/, productsService.create(product)];
             case 1:
-                result = _b.sent();
-                if (!result) {
-                    return [2 /*return*/, res.send({ message: "An error occured, please try again later" })];
+                savingRes = _b.sent();
+                if (!savingRes) {
+                    return [2 /*return*/, res.status(500).send({ message: 'Internal Server Error' })];
                 }
-                res.send(result);
+                res.send(savingRes);
                 return [2 /*return*/];
         }
     });
 }); };
-exports.createUser = createUser;
+exports.createProduct = createProduct;
 var all = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var users;
+    var products;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, usersService.findAll()];
+            case 0: return [4 /*yield*/, productsService.find()];
             case 1:
-                users = _a.sent();
-                res.send({ users: users });
+                products = _a.sent();
+                if (!products) {
+                    return [2 /*return*/, res.status(500).send({ message: 'Internal Server Error' })];
+                }
+                res.send({ products: products, user: req.body.user });
                 return [2 /*return*/];
         }
     });
 }); };
 exports.all = all;
-var getById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, user;
+var getByQuery = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                id = req.params.id;
-                return [4 /*yield*/, usersService.findById(id)];
-            case 1:
-                user = _a.sent();
-                if (!user) {
-                    return [2 /*return*/, res.send({ message: "ID '" + id + "' is invalid" })];
-                }
-                res.send({ user: user });
-                return [2 /*return*/];
-        }
+        return [2 /*return*/];
     });
 }); };
-exports.getById = getById;
+exports.getByQuery = getByQuery;

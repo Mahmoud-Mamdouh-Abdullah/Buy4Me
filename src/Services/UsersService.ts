@@ -1,8 +1,8 @@
-import { UserRepository } from "../Data/Models/User.Model";
+import { UsersRepository } from "../Data/Repositories/UsersRepository";
 import { Encryptor } from "./Encryptor";
 
-const userRepo = new UserRepository();
-export class UserService {
+const userRepo = new UsersRepository();
+export class UsersService {
     async findAll(filter: Object = {}) {
         const users = await userRepo.find(filter);
         if (users) {

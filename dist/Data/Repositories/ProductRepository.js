@@ -36,68 +36,89 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserService = void 0;
-var UserRepository_1 = require("../Data/Repositories/UserRepository");
-var Encryptor_1 = require("./Encryptor");
-var userRepo = new UserRepository_1.UserRepository();
-var UserService = /** @class */ (function () {
-    function UserService() {
+exports.ProductRepository = void 0;
+var Product_Model_1 = require("../Models/Product.Model");
+var ConntectToMongo_1 = require("../../Core/ConntectToMongo");
+var ProductRepository = /** @class */ (function () {
+    function ProductRepository() {
     }
-    UserService.prototype.findAll = function (filter) {
-        if (filter === void 0) { filter = {}; }
+    ProductRepository.prototype.insert = function (product) {
         return __awaiter(this, void 0, void 0, function () {
-            var users;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, userRepo.find(filter)];
-                    case 1:
-                        users = _a.sent();
-                        if (users) {
-                            return [2 /*return*/, users];
-                        }
-                        return [2 /*return*/, false];
-                }
-            });
-        });
-    };
-    UserService.prototype.create = function (user) {
-        return __awaiter(this, void 0, void 0, function () {
-            var encryptor, newUser;
+            var e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        encryptor = new Encryptor_1.Encryptor(user.password);
-                        user.password = encryptor.encrypt();
-                        user.created_at = new Date().toISOString();
-                        user.updated_at = new Date().toISOString();
-                        return [4 /*yield*/, userRepo.createUser(user)];
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
                     case 1:
-                        newUser = _a.sent();
-                        if (newUser) {
-                            return [2 /*return*/, newUser];
-                        }
+                        _a.sent();
+                        return [4 /*yield*/, Product_Model_1.Product.create(product)];
+                    case 2: return [2 /*return*/, (_a.sent())];
+                    case 3:
+                        e_1 = _a.sent();
                         return [2 /*return*/, false];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    UserService.prototype.findById = function (id) {
+    ProductRepository.prototype.find = function (filter) {
+        if (filter === void 0) { filter = {}; }
         return __awaiter(this, void 0, void 0, function () {
-            var user;
+            var e_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, userRepo.getUserById(id)];
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
                     case 1:
-                        user = (_a.sent());
-                        console.log(user);
-                        if (user) {
-                            return [2 /*return*/, user];
-                        }
+                        _a.sent();
+                        return [4 /*yield*/, Product_Model_1.Product.find(filter)];
+                    case 2: return [2 /*return*/, (_a.sent())];
+                    case 3:
+                        e_2 = _a.sent();
                         return [2 /*return*/, false];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    return UserService;
+    ProductRepository.prototype.findOne = function (filter) {
+        if (filter === void 0) { filter = {}; }
+        return __awaiter(this, void 0, void 0, function () {
+            var e_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, Product_Model_1.Product.findOne(filter)];
+                    case 2: return [2 /*return*/, (_a.sent())];
+                    case 3:
+                        e_3 = _a.sent();
+                        return [2 /*return*/, false];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return ProductRepository;
 }());
-exports.UserService = UserService;
+exports.ProductRepository = ProductRepository;
+var product = new Product_Model_1.Product({
+    title: 'Black Swetshirt',
+    description: 'Mens Clothes from Noon',
+    price: 350,
+    images: [
+        { url: 'https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455__480.jpg' },
+        { url: 'https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455__480.jpg' }
+    ],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+});
+//new ProductRepository().insert(product);
+var res = new ProductRepository().find({ title: { $regex: "black", $options: 'i' } }).then(function (data) {
+    console.log(data);
+});

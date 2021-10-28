@@ -1,9 +1,9 @@
-import { UserRepository } from "../../Data/Models/User.Model";
 import { Encryptor } from "../Encryptor";
 import { TokenService } from "./TokenServiec";
 import { Token } from "../../Data/Models/Token.Model";
+import { UsersRepository } from "../../Data/Repositories/UsersRepository";
 
-const userRepo = new UserRepository();
+const userRepo = new UsersRepository();
 const tokenService = new TokenService();
 
 export class AuthChecker {

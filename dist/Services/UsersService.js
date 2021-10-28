@@ -36,14 +36,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserService = void 0;
-var UserRepository_1 = require("../Data/Repositories/UserRepository");
+exports.UsersService = void 0;
+var UsersRepository_1 = require("../Data/Repositories/UsersRepository");
 var Encryptor_1 = require("./Encryptor");
-var userRepo = new UserRepository_1.UserRepository();
-var UserService = /** @class */ (function () {
-    function UserService() {
+var userRepo = new UsersRepository_1.UsersRepository();
+var UsersService = /** @class */ (function () {
+    function UsersService() {
     }
-    UserService.prototype.findAll = function (filter) {
+    UsersService.prototype.findAll = function (filter) {
         if (filter === void 0) { filter = {}; }
         return __awaiter(this, void 0, void 0, function () {
             var users;
@@ -60,7 +60,7 @@ var UserService = /** @class */ (function () {
             });
         });
     };
-    UserService.prototype.create = function (user) {
+    UsersService.prototype.create = function (user) {
         return __awaiter(this, void 0, void 0, function () {
             var encryptor, newUser;
             return __generator(this, function (_a) {
@@ -81,7 +81,7 @@ var UserService = /** @class */ (function () {
             });
         });
     };
-    UserService.prototype.findById = function (id) {
+    UsersService.prototype.findById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var user;
             return __generator(this, function (_a) {
@@ -98,6 +98,6 @@ var UserService = /** @class */ (function () {
             });
         });
     };
-    return UserService;
+    return UsersService;
 }());
-exports.UserService = UserService;
+exports.UsersService = UsersService;

@@ -48,11 +48,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthChecker = void 0;
-var User_Model_1 = require("../../Data/Models/User.Model");
 var Encryptor_1 = require("../Encryptor");
 var TokenServiec_1 = require("./TokenServiec");
 var Token_Model_1 = require("../../Data/Models/Token.Model");
-var userRepo = new User_Model_1.UserRepository();
+var UsersRepository_1 = require("../../Data/Repositories/UsersRepository");
+var userRepo = new UsersRepository_1.UsersRepository();
 var tokenService = new TokenServiec_1.TokenService();
 var AuthChecker = /** @class */ (function () {
     function AuthChecker(email, password) {

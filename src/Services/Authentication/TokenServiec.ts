@@ -1,17 +1,26 @@
 import { ObjectId } from "mongoose";
-import { TokenRepository } from "../../Data/Models/Token.Model";
+import { TokenRepository } from "../../Data/Repositories/TokenRepository";
+import { UsersRepository } from "../../Data/Repositories/UsersRepository";
 
 
 const tokenRepo = new TokenRepository();
-
+const userRepo = new UsersRepository();
 export class TokenService {
 
+    token?: string;
+    user?: any;
+
     async findToken(filter: Object = {}) {
-        let token = await tokenRepo.findToken(filter);
-        if (token) {
-            return token;
+        return await tokenRepo.findToken(filter);
+    }
+
+    async ifTokenExist(token: string) {
+        let tokenObject = await tokenRepo.findToken({token});
+        if(!tokenObject) {
+            return false;
         }
-        return false;
+        this.user = await userRepo.getUserById(tokenObject.user_id);
+        return true;
     }
 
     async create(tokenObject: any) {
@@ -28,5 +37,10 @@ export class TokenService {
             return result;
         }
         return false;
+    }
+
+    check(token: string) {
+        this.token = token;
+        return this;
     }
 }

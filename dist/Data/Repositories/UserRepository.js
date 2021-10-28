@@ -36,68 +36,96 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserService = void 0;
-var UserRepository_1 = require("../Data/Repositories/UserRepository");
-var Encryptor_1 = require("./Encryptor");
-var userRepo = new UserRepository_1.UserRepository();
-var UserService = /** @class */ (function () {
-    function UserService() {
+exports.UserRepository = void 0;
+var mongoose_1 = require("mongoose");
+var User_Model_1 = require("../Models/User.Model");
+var ConntectToMongo_1 = require("../../Core/ConntectToMongo");
+var UserRepository = /** @class */ (function () {
+    function UserRepository() {
     }
-    UserService.prototype.findAll = function (filter) {
+    UserRepository.prototype.find = function (filter) {
         if (filter === void 0) { filter = {}; }
         return __awaiter(this, void 0, void 0, function () {
-            var users;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, userRepo.find(filter)];
-                    case 1:
-                        users = _a.sent();
-                        if (users) {
-                            return [2 /*return*/, users];
-                        }
-                        return [2 /*return*/, false];
-                }
-            });
-        });
-    };
-    UserService.prototype.create = function (user) {
-        return __awaiter(this, void 0, void 0, function () {
-            var encryptor, newUser;
+            var e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        encryptor = new Encryptor_1.Encryptor(user.password);
-                        user.password = encryptor.encrypt();
-                        user.created_at = new Date().toISOString();
-                        user.updated_at = new Date().toISOString();
-                        return [4 /*yield*/, userRepo.createUser(user)];
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
                     case 1:
-                        newUser = _a.sent();
-                        if (newUser) {
-                            return [2 /*return*/, newUser];
-                        }
-                        return [2 /*return*/, false];
+                        _a.sent();
+                        return [4 /*yield*/, User_Model_1.User.find(filter)];
+                    case 2: return [2 /*return*/, (_a.sent())];
+                    case 3:
+                        e_1 = _a.sent();
+                        throw new Error(e_1);
+                    case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    UserService.prototype.findById = function (id) {
+    UserRepository.prototype.createUser = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var user;
+            var e_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, userRepo.getUserById(id)];
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
                     case 1:
-                        user = (_a.sent());
-                        console.log(user);
-                        if (user) {
-                            return [2 /*return*/, user];
-                        }
-                        return [2 /*return*/, false];
+                        _a.sent();
+                        return [4 /*yield*/, User_Model_1.User.create(user)];
+                    case 2: return [2 /*return*/, (_a.sent())];
+                    case 3:
+                        e_2 = _a.sent();
+                        throw new Error(e_2);
+                    case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    return UserService;
+    UserRepository.prototype.findUser = function (filter) {
+        if (filter === void 0) { filter = {}; }
+        return __awaiter(this, void 0, void 0, function () {
+            var e_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, User_Model_1.User.findOne(filter)];
+                    case 2: return [2 /*return*/, (_a.sent())];
+                    case 3:
+                        e_3 = _a.sent();
+                        return [2 /*return*/, false];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserRepository.prototype.getUserById = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _id, e_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        _id = new mongoose_1.mongo.ObjectId(id);
+                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, User_Model_1.User.findById(_id)];
+                    case 2: return [2 /*return*/, (_a.sent())];
+                    case 3:
+                        e_4 = _a.sent();
+                        return [2 /*return*/, false];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return UserRepository;
 }());
-exports.UserService = UserService;
+exports.UserRepository = UserRepository;

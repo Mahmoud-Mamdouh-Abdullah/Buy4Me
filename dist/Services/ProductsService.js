@@ -36,68 +36,61 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserService = void 0;
-var UserRepository_1 = require("../Data/Repositories/UserRepository");
-var Encryptor_1 = require("./Encryptor");
-var userRepo = new UserRepository_1.UserRepository();
-var UserService = /** @class */ (function () {
-    function UserService() {
+exports.ProductsService = void 0;
+var ProductsRepository_1 = require("../Data/Repositories/ProductsRepository");
+var productsRepository = new ProductsRepository_1.ProductsRepository();
+var ProductsService = /** @class */ (function () {
+    function ProductsService() {
     }
-    UserService.prototype.findAll = function (filter) {
+    ProductsService.prototype.create = function (productObject) {
+        return __awaiter(this, void 0, void 0, function () {
+            var product;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, productsRepository.insert(productObject)];
+                    case 1:
+                        product = _a.sent();
+                        if (product) {
+                            return [2 /*return*/, product];
+                        }
+                        return [2 /*return*/, false];
+                }
+            });
+        });
+    };
+    ProductsService.prototype.find = function (filter) {
         if (filter === void 0) { filter = {}; }
         return __awaiter(this, void 0, void 0, function () {
-            var users;
+            var productList;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, userRepo.find(filter)];
+                    case 0: return [4 /*yield*/, productsRepository.find(filter)];
                     case 1:
-                        users = _a.sent();
-                        if (users) {
-                            return [2 /*return*/, users];
+                        productList = _a.sent();
+                        if (productList) {
+                            return [2 /*return*/, productList];
                         }
                         return [2 /*return*/, false];
                 }
             });
         });
     };
-    UserService.prototype.create = function (user) {
+    ProductsService.prototype.findOne = function (filter) {
         return __awaiter(this, void 0, void 0, function () {
-            var encryptor, newUser;
+            var productList;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        encryptor = new Encryptor_1.Encryptor(user.password);
-                        user.password = encryptor.encrypt();
-                        user.created_at = new Date().toISOString();
-                        user.updated_at = new Date().toISOString();
-                        return [4 /*yield*/, userRepo.createUser(user)];
+                    case 0: return [4 /*yield*/, productsRepository.findOne(filter)];
                     case 1:
-                        newUser = _a.sent();
-                        if (newUser) {
-                            return [2 /*return*/, newUser];
+                        productList = _a.sent();
+                        if (productList) {
+                            return [2 /*return*/, productList];
                         }
                         return [2 /*return*/, false];
                 }
             });
         });
     };
-    UserService.prototype.findById = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            var user;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, userRepo.getUserById(id)];
-                    case 1:
-                        user = (_a.sent());
-                        console.log(user);
-                        if (user) {
-                            return [2 /*return*/, user];
-                        }
-                        return [2 /*return*/, false];
-                }
-            });
-        });
-    };
-    return UserService;
+    return ProductsService;
 }());
-exports.UserService = UserService;
+exports.ProductsService = ProductsService;

@@ -37,24 +37,40 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TokenService = void 0;
-var Token_Model_1 = require("../../Data/Models/Token.Model");
-var tokenRepo = new Token_Model_1.TokenRepository();
+var TokenRepository_1 = require("../../Data/Repositories/TokenRepository");
+var UsersRepository_1 = require("../../Data/Repositories/UsersRepository");
+var tokenRepo = new TokenRepository_1.TokenRepository();
+var userRepo = new UsersRepository_1.UsersRepository();
 var TokenService = /** @class */ (function () {
     function TokenService() {
     }
     TokenService.prototype.findToken = function (filter) {
         if (filter === void 0) { filter = {}; }
         return __awaiter(this, void 0, void 0, function () {
-            var token;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, tokenRepo.findToken(filter)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    TokenService.prototype.ifTokenExist = function (token) {
+        return __awaiter(this, void 0, void 0, function () {
+            var tokenObject, _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, tokenRepo.findToken({ token: token })];
                     case 1:
-                        token = _a.sent();
-                        if (token) {
-                            return [2 /*return*/, token];
+                        tokenObject = _b.sent();
+                        if (!tokenObject) {
+                            return [2 /*return*/, false];
                         }
-                        return [2 /*return*/, false];
+                        _a = this;
+                        return [4 /*yield*/, userRepo.getUserById(tokenObject.user_id)];
+                    case 2:
+                        _a.user = _b.sent();
+                        return [2 /*return*/, true];
                 }
             });
         });
@@ -90,6 +106,10 @@ var TokenService = /** @class */ (function () {
                 }
             });
         });
+    };
+    TokenService.prototype.check = function (token) {
+        this.token = token;
+        return this;
     };
     return TokenService;
 }());

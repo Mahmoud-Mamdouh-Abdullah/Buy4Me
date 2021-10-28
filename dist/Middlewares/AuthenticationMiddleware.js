@@ -36,68 +36,35 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserService = void 0;
-var UserRepository_1 = require("../Data/Repositories/UserRepository");
-var Encryptor_1 = require("./Encryptor");
-var userRepo = new UserRepository_1.UserRepository();
-var UserService = /** @class */ (function () {
-    function UserService() {
+exports.AuthMiddleware = void 0;
+var TokenServiec_1 = require("../Services/Authentication/TokenServiec");
+var AuthMiddleware = /** @class */ (function () {
+    function AuthMiddleware() {
     }
-    UserService.prototype.findAll = function (filter) {
-        if (filter === void 0) { filter = {}; }
-        return __awaiter(this, void 0, void 0, function () {
-            var users;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, userRepo.find(filter)];
-                    case 1:
-                        users = _a.sent();
-                        if (users) {
-                            return [2 /*return*/, users];
-                        }
-                        return [2 /*return*/, false];
-                }
-            });
-        });
-    };
-    UserService.prototype.create = function (user) {
-        return __awaiter(this, void 0, void 0, function () {
-            var encryptor, newUser;
+    AuthMiddleware.prototype.getMiddlware = function () {
+        var _this = this;
+        return function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+            var token, tokenCheck;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        encryptor = new Encryptor_1.Encryptor(user.password);
-                        user.password = encryptor.encrypt();
-                        user.created_at = new Date().toISOString();
-                        user.updated_at = new Date().toISOString();
-                        return [4 /*yield*/, userRepo.createUser(user)];
-                    case 1:
-                        newUser = _a.sent();
-                        if (newUser) {
-                            return [2 /*return*/, newUser];
+                        token = req.header('token');
+                        if (!token) {
+                            return [2 /*return*/, res.status(401).send({ messages: 'unauthorized user' })];
                         }
-                        return [2 /*return*/, false];
+                        tokenCheck = new TokenServiec_1.TokenService().check(token);
+                        return [4 /*yield*/, tokenCheck.ifTokenExist(token)];
+                    case 1:
+                        if (!(_a.sent())) {
+                            return [2 /*return*/, res.status(401).send({ messages: 'unauthorized user' })];
+                        }
+                        req.body.user = tokenCheck.user;
+                        next();
+                        return [2 /*return*/];
                 }
             });
-        });
+        }); };
     };
-    UserService.prototype.findById = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            var user;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, userRepo.getUserById(id)];
-                    case 1:
-                        user = (_a.sent());
-                        console.log(user);
-                        if (user) {
-                            return [2 /*return*/, user];
-                        }
-                        return [2 /*return*/, false];
-                }
-            });
-        });
-    };
-    return UserService;
+    return AuthMiddleware;
 }());
-exports.UserService = UserService;
+exports.AuthMiddleware = AuthMiddleware;
