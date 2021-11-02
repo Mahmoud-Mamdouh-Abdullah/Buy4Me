@@ -1,7 +1,7 @@
-import mongoose, { connect } from "mongoose"
+import { connect } from "mongoose"
 
 const mongoUrl = 'mongodb://localhost:27017/e-commerce';
-export const ConntectToMongo = async () => {
+export const ConnectToMongo = async () => {
     try {
         await connect(mongoUrl);
     } catch {

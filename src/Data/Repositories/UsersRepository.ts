@@ -1,11 +1,11 @@
 import { mongo } from 'mongoose';
 import { User } from '../Models/User.Model';
-import { ConntectToMongo } from '../../Core/ConntectToMongo';
+import { ConnectToMongo } from '../../Core/ConnectToMongo';
 
 export class UsersRepository {
     async find(filter: Object = {}) {
         try {
-            await ConntectToMongo();
+            await ConnectToMongo();
             return (await User.find(filter));
         } catch (e: any) {
             throw new Error(e);
@@ -14,7 +14,7 @@ export class UsersRepository {
 
     async createUser(user: any) {
         try {
-            await ConntectToMongo();
+            await ConnectToMongo();
             return (await User.create(user));
         } catch (e: any) {
             throw new Error(e);
@@ -23,7 +23,7 @@ export class UsersRepository {
 
     async findUser(filter: Object = {}) {
         try {
-            await ConntectToMongo();
+            await ConnectToMongo();
             return (await User.findOne(filter));
         } catch (e: any) {
             return false;
@@ -33,7 +33,7 @@ export class UsersRepository {
     async getUserById(id: string) {
         try {
             const _id = new mongo.ObjectId(id);
-            await ConntectToMongo();
+            await ConnectToMongo();
             return (await User.findById(_id));
         } catch (e: any) {
             return false;

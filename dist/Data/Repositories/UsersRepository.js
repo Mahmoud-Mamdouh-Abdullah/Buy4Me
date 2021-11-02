@@ -39,7 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersRepository = void 0;
 var mongoose_1 = require("mongoose");
 var User_Model_1 = require("../Models/User.Model");
-var ConntectToMongo_1 = require("../../Core/ConntectToMongo");
+var ConnectToMongo_1 = require("../../Core/ConnectToMongo");
 var UsersRepository = /** @class */ (function () {
     function UsersRepository() {
     }
@@ -51,7 +51,7 @@ var UsersRepository = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
                         return [4 /*yield*/, User_Model_1.User.find(filter)];
@@ -71,7 +71,7 @@ var UsersRepository = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
                         return [4 /*yield*/, User_Model_1.User.create(user)];
@@ -92,7 +92,7 @@ var UsersRepository = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
                         return [4 /*yield*/, User_Model_1.User.findOne(filter)];
@@ -113,7 +113,7 @@ var UsersRepository = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
                         _id = new mongoose_1.mongo.ObjectId(id);
-                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
                         return [4 /*yield*/, User_Model_1.User.findById(_id)];

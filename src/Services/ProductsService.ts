@@ -7,27 +7,22 @@ const productsRepository = new ProductsRepository();
 
 export class ProductsService {
 
-    async create(productObject: any): Promise<any> {
-        let product = await productsRepository.insert(productObject);
-        if (product) {
-            return product;
-        }
-        return false;
+    async addProduct(productObject: any): Promise<any> {
+        return (await productsRepository.insert(productObject));
     }
 
-    async find(filter: Object = {}) {
-        let productList = await productsRepository.find(filter);
-        if (productList) {
-            return productList;
-        }
-        return false;
+    async getAll() {
+        return (await productsRepository.selectAll());
     }
 
-    async findOne(filter: Object) {
-        let productList = await productsRepository.findOne(filter);
-        if (productList) {
-            return productList;
-        }
-        return false;
+    async searchProducts(query: string) {
+        let filter = {
+            $or: [
+                { title: { $regex: query, $options: 'i' } },
+                { description: { $regex: query, $options: 'i' } },
+                { category: { $regex: query, $options: 'i' } },
+            ]
+        };
+        return (await productsRepository.selectAll(filter));
     }
 }

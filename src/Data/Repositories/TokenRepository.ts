@@ -1,12 +1,12 @@
 import { mongo } from "mongoose";
 import { Token } from "../Models/Token.Model";
-import { ConntectToMongo } from "../../Core/ConntectToMongo";
+import { ConnectToMongo } from "../../Core/ConnectToMongo";
 
 export class TokenRepository {
 
     async createToken(token: any) {
         try {
-            await ConntectToMongo();
+            await ConnectToMongo();
             return (await Token.create(token));
         } catch (e) {
             return false;
@@ -15,7 +15,7 @@ export class TokenRepository {
 
     async findToken(filter: Object = {}) {
         try {
-            await ConntectToMongo();
+            await ConnectToMongo();
             return (await Token.findOne(filter));
         } catch (e) {
             return false;
@@ -25,7 +25,7 @@ export class TokenRepository {
     async deleteToken(id: string) {
         try {
             let _id = new mongo.ObjectId(id);
-            await ConntectToMongo();
+            await ConnectToMongo();
             return (await Token.deleteOne({ _id }));
         } catch (e) {
             return false;

@@ -36,51 +36,24 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProductsService = void 0;
-var ProductsRepository_1 = require("../Data/Repositories/ProductsRepository");
-var productsRepository = new ProductsRepository_1.ProductsRepository();
-var ProductsService = /** @class */ (function () {
-    function ProductsService() {
-    }
-    ProductsService.prototype.addProduct = function (productObject) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, productsRepository.insert(productObject)];
-                    case 1: return [2 /*return*/, (_a.sent())];
-                }
-            });
-        });
-    };
-    ProductsService.prototype.getAll = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, productsRepository.selectAll()];
-                    case 1: return [2 /*return*/, (_a.sent())];
-                }
-            });
-        });
-    };
-    ProductsService.prototype.searchProducts = function (query) {
-        return __awaiter(this, void 0, void 0, function () {
-            var filter;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        filter = {
-                            $or: [
-                                { title: { $regex: query, $options: 'i' } },
-                                { description: { $regex: query, $options: 'i' } },
-                                { category: { $regex: query, $options: 'i' } },
-                            ]
-                        };
-                        return [4 /*yield*/, productsRepository.selectAll(filter)];
-                    case 1: return [2 /*return*/, (_a.sent())];
-                }
-            });
-        });
-    };
-    return ProductsService;
-}());
-exports.ProductsService = ProductsService;
+exports.ConnectToMongo = void 0;
+var mongoose_1 = require("mongoose");
+var mongoUrl = 'mongodb://localhost:27017/e-commerce';
+var ConnectToMongo = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, (0, mongoose_1.connect)(mongoUrl)];
+            case 1:
+                _b.sent();
+                return [3 /*break*/, 3];
+            case 2:
+                _a = _b.sent();
+                throw new Error('Failed to connect to server');
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.ConnectToMongo = ConnectToMongo;

@@ -36,55 +36,58 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserRepository = void 0;
-var mongoose_1 = require("mongoose");
-var User_Model_1 = require("../Models/User.Model");
-var ConntectToMongo_1 = require("../../Core/ConntectToMongo");
-var UserRepository = /** @class */ (function () {
-    function UserRepository() {
+exports.OrdersRepository = void 0;
+var ConnectToMongo_1 = require("../../Core/ConnectToMongo");
+var Order_Model_1 = require("../Models/Order.Model");
+var OrdersRepository = /** @class */ (function () {
+    function OrdersRepository() {
     }
-    UserRepository.prototype.find = function (filter) {
-        if (filter === void 0) { filter = {}; }
+    OrdersRepository.prototype.insert = function (order) {
         return __awaiter(this, void 0, void 0, function () {
             var e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, User_Model_1.User.find(filter)];
+                        return [4 /*yield*/, Order_Model_1.Order.create(order)];
                     case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         e_1 = _a.sent();
-                        throw new Error(e_1);
+                        return [2 /*return*/, {
+                                error: e_1.message
+                            }];
                     case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    UserRepository.prototype.createUser = function (user) {
+    OrdersRepository.prototype.selectOne = function (filter) {
+        if (filter === void 0) { filter = {}; }
         return __awaiter(this, void 0, void 0, function () {
             var e_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, User_Model_1.User.create(user)];
+                        return [4 /*yield*/, Order_Model_1.Order.findOne(filter)];
                     case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         e_2 = _a.sent();
-                        throw new Error(e_2);
+                        return [2 /*return*/, {
+                                error: e_2.message
+                            }];
                     case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    UserRepository.prototype.findUser = function (filter) {
+    OrdersRepository.prototype.selectAll = function (filter) {
         if (filter === void 0) { filter = {}; }
         return __awaiter(this, void 0, void 0, function () {
             var e_3;
@@ -92,40 +95,89 @@ var UserRepository = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, User_Model_1.User.findOne(filter)];
+                        return [4 /*yield*/, Order_Model_1.Order.find(filter)];
                     case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         e_3 = _a.sent();
-                        return [2 /*return*/, false];
+                        return [2 /*return*/, {
+                                error: e_3.message
+                            }];
                     case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    UserRepository.prototype.getUserById = function (id) {
+    OrdersRepository.prototype.deleteOne = function (filter) {
+        if (filter === void 0) { filter = {}; }
         return __awaiter(this, void 0, void 0, function () {
-            var _id, e_4;
+            var e_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        _id = new mongoose_1.mongo.ObjectId(id);
-                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, User_Model_1.User.findById(_id)];
+                        return [4 /*yield*/, Order_Model_1.Order.deleteOne(filter)];
                     case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         e_4 = _a.sent();
-                        return [2 /*return*/, false];
+                        return [2 /*return*/, {
+                                error: e_4.message
+                            }];
                     case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    return UserRepository;
+    OrdersRepository.prototype.deleteMany = function (filter) {
+        if (filter === void 0) { filter = {}; }
+        return __awaiter(this, void 0, void 0, function () {
+            var e_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, Order_Model_1.Order.deleteMany(filter)];
+                    case 2: return [2 /*return*/, (_a.sent())];
+                    case 3:
+                        e_5 = _a.sent();
+                        return [2 /*return*/, {
+                                error: e_5.message
+                            }];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    OrdersRepository.prototype.selectOneAndUpdate = function (id, body) {
+        return __awaiter(this, void 0, void 0, function () {
+            var e_6;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, Order_Model_1.Order.findByIdAndUpdate(id, body)];
+                    case 2: return [2 /*return*/, (_a.sent())];
+                    case 3:
+                        e_6 = _a.sent();
+                        return [2 /*return*/, {
+                                error: e_6.message
+                            }];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return OrdersRepository;
 }());
-exports.UserRepository = UserRepository;
+exports.OrdersRepository = OrdersRepository;

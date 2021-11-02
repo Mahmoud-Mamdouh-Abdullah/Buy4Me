@@ -60,7 +60,7 @@ var createProduct = function (req, res) { return __awaiter(void 0, void 0, void 
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString()
                 });
-                return [4 /*yield*/, productsService.create(product)];
+                return [4 /*yield*/, productsService.addProduct(product)];
             case 1:
                 savingRes = _b.sent();
                 if (!savingRes) {
@@ -76,10 +76,10 @@ var all = function (req, res) { return __awaiter(void 0, void 0, void 0, functio
     var products;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, productsService.find()];
+            case 0: return [4 /*yield*/, productsService.getAll()];
             case 1:
                 products = _a.sent();
-                if (!products) {
+                if (products.error) {
                     return [2 /*return*/, res.status(500).send({ message: 'Internal Server Error' })];
                 }
                 res.send({ products: products, user: req.body.user });
@@ -89,22 +89,15 @@ var all = function (req, res) { return __awaiter(void 0, void 0, void 0, functio
 }); };
 exports.all = all;
 var getByQuery = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var query, filter, products;
+    var query, products;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 query = req.params.query;
-                filter = {
-                    $or: [
-                        { title: { $regex: query, $options: 'i' } },
-                        { description: { $regex: query, $options: 'i' } },
-                        { category: { $regex: query, $options: 'i' } },
-                    ]
-                };
-                return [4 /*yield*/, productsService.find(filter)];
+                return [4 /*yield*/, productsService.searchProducts(query)];
             case 1:
                 products = _a.sent();
-                if (!products) {
+                if (products.error) {
                     res.status(500).send('Internal server error, try again later');
                 }
                 res.send({ products: products, user: req.body.user });

@@ -25,7 +25,7 @@ export const createProduct = async (req: Request, res: Response) => {
         updated_at: new Date().toISOString()
     });
 
-    let savingRes = await productsService.create(product);
+    let savingRes = await productsService.addProduct(product);
     if (!savingRes) {
         return res.status(500).send({ message: 'Internal Server Error' });
     }
@@ -33,8 +33,8 @@ export const createProduct = async (req: Request, res: Response) => {
 }
 
 export const all = async (req: Request, res: Response) => {
-    let products = await productsService.find();
-    if (!products) {
+    let products = await productsService.getAll();
+    if (products.error) {
         return res.status(500).send({ message: 'Internal Server Error' });
     }
     res.send({ products, user: req.body.user });
@@ -42,16 +42,8 @@ export const all = async (req: Request, res: Response) => {
 
 export const getByQuery = async (req: Request, res: Response) => {
     let query = req.params.query;
-    let filter = {
-        $or: [
-            { title: { $regex: query, $options: 'i' } },
-            { description: { $regex: query, $options: 'i' } },
-            { category: { $regex: query, $options: 'i' } },
-        ]
-    };
-
-    let products = await productsService.find(filter);
-    if (!products) {
+    let products = await productsService.searchProducts(query);
+    if (products.error) {
         res.status(500).send('Internal server error, try again later');
     }
     res.send({ products, user: req.body.user });

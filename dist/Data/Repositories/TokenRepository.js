@@ -39,7 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TokenRepository = void 0;
 var mongoose_1 = require("mongoose");
 var Token_Model_1 = require("../Models/Token.Model");
-var ConntectToMongo_1 = require("../../Core/ConntectToMongo");
+var ConnectToMongo_1 = require("../../Core/ConnectToMongo");
 var TokenRepository = /** @class */ (function () {
     function TokenRepository() {
     }
@@ -50,7 +50,7 @@ var TokenRepository = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
                         return [4 /*yield*/, Token_Model_1.Token.create(token)];
@@ -71,7 +71,7 @@ var TokenRepository = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
                         return [4 /*yield*/, Token_Model_1.Token.findOne(filter)];
@@ -92,7 +92,7 @@ var TokenRepository = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
                         _id = new mongoose_1.mongo.ObjectId(id);
-                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
                         return [4 /*yield*/, Token_Model_1.Token.deleteOne({ _id: _id })];

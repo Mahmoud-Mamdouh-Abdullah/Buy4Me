@@ -1,12 +1,12 @@
-import { Product } from "../Models/Product.Model";
 import { ConnectToMongo } from "../../Core/ConnectToMongo";
+import { Order } from "../Models/Order.Model";
 
 
-export class ProductsRepository {
-    async insert(product: any): Promise<any> {
+export class OrdersRepository {
+    async insert(order: any) {
         try {
             await ConnectToMongo();
-            return (await Product.create(product));
+            return (await Order.create(order));
         } catch (e: any) {
             return {
                 error: e.message
@@ -14,10 +14,10 @@ export class ProductsRepository {
         }
     }
 
-    async selectOne(filter: Object = {}): Promise<any> {
+    async selectOne(filter: Object = {}) {
         try {
             await ConnectToMongo();
-            return (await Product.findOne(filter));
+            return (await Order.findOne(filter));
         } catch (e: any) {
             return {
                 error: e.message
@@ -25,10 +25,10 @@ export class ProductsRepository {
         }
     }
 
-    async selectAll(filter: Object = {}): Promise<any> {
+    async selectAll(filter: Object = {}) {
         try {
             await ConnectToMongo();
-            return (await Product.find(filter));
+            return (await Order.find(filter));
         } catch (e: any) {
             return {
                 error: e.message
@@ -39,7 +39,7 @@ export class ProductsRepository {
     async deleteOne(filter: Object = {}) {
         try {
             await ConnectToMongo();
-            return (await Product.findOneAndDelete(filter));
+            return (await Order.deleteOne(filter));
         } catch (e: any) {
             return {
                 error: e.message
@@ -50,7 +50,7 @@ export class ProductsRepository {
     async deleteMany(filter: Object = {}) {
         try {
             await ConnectToMongo();
-            return (await Product.deleteMany(filter));
+            return (await Order.deleteMany(filter));
         } catch (e: any) {
             return {
                 error: e.message
@@ -61,13 +61,11 @@ export class ProductsRepository {
     async selectOneAndUpdate(id: string, body: Object) {
         try {
             await ConnectToMongo();
-            return (await Product.findByIdAndUpdate(id, body));
+            return (await Order.findByIdAndUpdate(id, body));
         } catch (e: any) {
             return {
                 error: e.message
             }
         }
     }
-
-
 }

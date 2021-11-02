@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductsRepository = void 0;
 var Product_Model_1 = require("../Models/Product.Model");
-var ConntectToMongo_1 = require("../../Core/ConntectToMongo");
+var ConnectToMongo_1 = require("../../Core/ConnectToMongo");
 var ProductsRepository = /** @class */ (function () {
     function ProductsRepository() {
     }
@@ -49,20 +49,22 @@ var ProductsRepository = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
                         return [4 /*yield*/, Product_Model_1.Product.create(product)];
                     case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         e_1 = _a.sent();
-                        return [2 /*return*/, false];
+                        return [2 /*return*/, {
+                                error: e_1.message
+                            }];
                     case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    ProductsRepository.prototype.find = function (filter) {
+    ProductsRepository.prototype.selectOne = function (filter) {
         if (filter === void 0) { filter = {}; }
         return __awaiter(this, void 0, void 0, function () {
             var e_2;
@@ -70,21 +72,22 @@ var ProductsRepository = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, Product_Model_1.Product.find(filter)];
+                        return [4 /*yield*/, Product_Model_1.Product.findOne(filter)];
                     case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         e_2 = _a.sent();
-                        console.log(e_2.message);
-                        return [2 /*return*/, false];
+                        return [2 /*return*/, {
+                                error: e_2.message
+                            }];
                     case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    ProductsRepository.prototype.findOne = function (filter) {
+    ProductsRepository.prototype.selectAll = function (filter) {
         if (filter === void 0) { filter = {}; }
         return __awaiter(this, void 0, void 0, function () {
             var e_3;
@@ -92,14 +95,84 @@ var ProductsRepository = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, Product_Model_1.Product.findOne(filter)];
+                        return [4 /*yield*/, Product_Model_1.Product.find(filter)];
                     case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         e_3 = _a.sent();
-                        return [2 /*return*/, false];
+                        return [2 /*return*/, {
+                                error: e_3.message
+                            }];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ProductsRepository.prototype.deleteOne = function (filter) {
+        if (filter === void 0) { filter = {}; }
+        return __awaiter(this, void 0, void 0, function () {
+            var e_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, Product_Model_1.Product.findOneAndDelete(filter)];
+                    case 2: return [2 /*return*/, (_a.sent())];
+                    case 3:
+                        e_4 = _a.sent();
+                        return [2 /*return*/, {
+                                error: e_4.message
+                            }];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ProductsRepository.prototype.deleteMany = function (filter) {
+        if (filter === void 0) { filter = {}; }
+        return __awaiter(this, void 0, void 0, function () {
+            var e_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, Product_Model_1.Product.deleteMany(filter)];
+                    case 2: return [2 /*return*/, (_a.sent())];
+                    case 3:
+                        e_5 = _a.sent();
+                        return [2 /*return*/, {
+                                error: e_5.message
+                            }];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ProductsRepository.prototype.selectOneAndUpdate = function (id, body) {
+        return __awaiter(this, void 0, void 0, function () {
+            var e_6;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, Product_Model_1.Product.findByIdAndUpdate(id, body)];
+                    case 2: return [2 /*return*/, (_a.sent())];
+                    case 3:
+                        e_6 = _a.sent();
+                        return [2 /*return*/, {
+                                error: e_6.message
+                            }];
                     case 4: return [2 /*return*/];
                 }
             });

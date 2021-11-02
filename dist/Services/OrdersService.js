@@ -36,89 +36,90 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProductRepository = void 0;
-var Product_Model_1 = require("../Models/Product.Model");
-var ConntectToMongo_1 = require("../../Core/ConntectToMongo");
-var ProductRepository = /** @class */ (function () {
-    function ProductRepository() {
+exports.OrdersService = void 0;
+var OrdersRepository_1 = require("../Data/Repositories/OrdersRepository");
+var orderRepository = new OrdersRepository_1.OrdersRepository();
+var OrdersService = /** @class */ (function () {
+    function OrdersService() {
     }
-    ProductRepository.prototype.insert = function (product) {
+    OrdersService.prototype.addOrder = function (orderObject) {
         return __awaiter(this, void 0, void 0, function () {
-            var e_1;
+            var order;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                    case 0: return [4 /*yield*/, orderRepository.insert(orderObject)];
                     case 1:
-                        _a.sent();
-                        return [4 /*yield*/, Product_Model_1.Product.create(product)];
-                    case 2: return [2 /*return*/, (_a.sent())];
-                    case 3:
-                        e_1 = _a.sent();
-                        return [2 /*return*/, false];
-                    case 4: return [2 /*return*/];
+                        order = _a.sent();
+                        return [2 /*return*/, order];
                 }
             });
         });
     };
-    ProductRepository.prototype.find = function (filter) {
-        if (filter === void 0) { filter = {}; }
+    OrdersService.prototype.getAll = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var e_2;
+            var orders;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                    case 0: return [4 /*yield*/, orderRepository.selectAll()];
                     case 1:
-                        _a.sent();
-                        return [4 /*yield*/, Product_Model_1.Product.find(filter)];
-                    case 2: return [2 /*return*/, (_a.sent())];
-                    case 3:
-                        e_2 = _a.sent();
-                        return [2 /*return*/, false];
-                    case 4: return [2 /*return*/];
+                        orders = _a.sent();
+                        return [2 /*return*/, orders];
                 }
             });
         });
     };
-    ProductRepository.prototype.findOne = function (filter) {
-        if (filter === void 0) { filter = {}; }
+    OrdersService.prototype.getOrdersByUserID = function (user_id) {
         return __awaiter(this, void 0, void 0, function () {
-            var e_3;
+            var orders;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, (0, ConntectToMongo_1.ConntectToMongo)()];
+                    case 0: return [4 /*yield*/, orderRepository.selectAll({ user_id: user_id })];
                     case 1:
-                        _a.sent();
-                        return [4 /*yield*/, Product_Model_1.Product.findOne(filter)];
-                    case 2: return [2 /*return*/, (_a.sent())];
-                    case 3:
-                        e_3 = _a.sent();
-                        return [2 /*return*/, false];
-                    case 4: return [2 /*return*/];
+                        orders = _a.sent();
+                        return [2 /*return*/, orders];
                 }
             });
         });
     };
-    return ProductRepository;
+    OrdersService.prototype.getOrderByID = function (_id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var order;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, orderRepository.selectOne({ _id: _id })];
+                    case 1:
+                        order = _a.sent();
+                        return [2 /*return*/, order];
+                }
+            });
+        });
+    };
+    OrdersService.prototype.editOrder = function (_id, body) {
+        return __awaiter(this, void 0, void 0, function () {
+            var editingRes;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, orderRepository.selectOneAndUpdate(_id, body)];
+                    case 1:
+                        editingRes = _a.sent();
+                        return [2 /*return*/, editingRes];
+                }
+            });
+        });
+    };
+    OrdersService.prototype.removeOrder = function (_id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var removingRes;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, orderRepository.deleteOne({ _id: _id })];
+                    case 1:
+                        removingRes = _a.sent();
+                        return [2 /*return*/, removingRes];
+                }
+            });
+        });
+    };
+    return OrdersService;
 }());
-exports.ProductRepository = ProductRepository;
-var product = new Product_Model_1.Product({
-    title: 'Black Swetshirt',
-    description: 'Mens Clothes from Noon',
-    price: 350,
-    images: [
-        { url: 'https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455__480.jpg' },
-        { url: 'https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455__480.jpg' }
-    ],
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-});
-//new ProductRepository().insert(product);
-var res = new ProductRepository().find({ title: { $regex: "black", $options: 'i' } }).then(function (data) {
-    console.log(data);
-});
+exports.OrdersService = OrdersService;

@@ -4,7 +4,7 @@
   "description": "E-Commerce Backend Servier With Node.js",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc -watch  \"nodemon ./dist/server.js\" ",
+    "dev": "tsc-watch --onSuccess \"nodemon ./dist/main.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,11 +21,13 @@
     "express": "^4.17.1",
     "mongoose": "^6.0.12",
     "multer": "^1.4.3",
+    "nodemon": "^2.0.14",
     "typescript": "^4.4.4"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/multer": "^1.4.7",
-    "run-typescript-in-nodemon": "^1.0.0"
+    "run-typescript-in-nodemon": "^1.0.0",
+    "tsc-watch": "^4.5.0"
   }
 }
