@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 
 const ProductSchema = new Schema({
     title: String,
@@ -8,6 +8,7 @@ const ProductSchema = new Schema({
     images: [{
         url: String
     }],
+    user_id: Types.ObjectId,
     created_at: String,
     updated_at: String
 });

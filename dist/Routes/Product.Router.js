@@ -22,6 +22,8 @@ var ProductRouter = /** @class */ (function () {
         router.get('/', ProductsController_1.all);
         router.get('/:query', ProductsController_1.getByQuery);
         router.post('/', ProductsController_1.createProduct);
+        router.delete('/:id', ProductsController_1.deleteProduct);
+        router.put('/:id', ProductsController_1.updateProduct);
         return router;
     };
     return ProductRouter;

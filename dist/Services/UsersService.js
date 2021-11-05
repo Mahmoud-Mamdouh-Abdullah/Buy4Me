@@ -98,6 +98,22 @@ var UsersService = /** @class */ (function () {
             });
         });
     };
+    UsersService.prototype.ifUserExist = function (_id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, userRepo.selectOne({ _id: _id })];
+                    case 1:
+                        user = _a.sent();
+                        console.log(user);
+                        if (user === null || user.error)
+                            return [2 /*return*/, false];
+                        return [2 /*return*/, true];
+                }
+            });
+        });
+    };
     return UsersService;
 }());
 exports.UsersService = UsersService;

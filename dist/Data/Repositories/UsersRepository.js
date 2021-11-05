@@ -84,7 +84,7 @@ var UsersRepository = /** @class */ (function () {
             });
         });
     };
-    UsersRepository.prototype.findUser = function (filter) {
+    UsersRepository.prototype.selectOne = function (filter) {
         if (filter === void 0) { filter = {}; }
         return __awaiter(this, void 0, void 0, function () {
             var e_3;
@@ -99,7 +99,9 @@ var UsersRepository = /** @class */ (function () {
                     case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         e_3 = _a.sent();
-                        return [2 /*return*/, false];
+                        return [2 /*return*/, {
+                                error: e_3.message
+                            }];
                     case 4: return [2 /*return*/];
                 }
             });

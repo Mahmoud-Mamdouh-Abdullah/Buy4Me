@@ -4,11 +4,17 @@ var MyServer_1 = require("./Core/MyServer");
 var Order_Router_1 = require("./Routes/Order.Router");
 var Product_Router_1 = require("./Routes/Product.Router");
 var User_Router_1 = require("./Routes/User.Router");
+/**
+ * create the app server
+ */
 var app = new MyServer_1.MyServer();
 /**
- * add routers
+ * add routers to the server
  */
 app.addRouter(new User_Router_1.UserRouter());
 app.addRouter(new Product_Router_1.ProductRouter());
 app.addRouter(new Order_Router_1.OrderRouter());
+/**
+ * listen to the server
+ */
 app.listen(5000);

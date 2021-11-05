@@ -10,6 +10,7 @@ var ProductSchema = new mongoose_1.Schema({
     images: [{
             url: String
         }],
+    user_id: mongoose_1.Types.ObjectId,
     created_at: String,
     updated_at: String
 });

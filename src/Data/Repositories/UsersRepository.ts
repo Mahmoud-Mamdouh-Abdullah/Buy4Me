@@ -21,12 +21,14 @@ export class UsersRepository {
         }
     }
 
-    async findUser(filter: Object = {}) {
+    async selectOne(filter: Object = {}) {
         try {
             await ConnectToMongo();
             return (await User.findOne(filter));
         } catch (e: any) {
-            return false;
+            return {
+                error: e.message
+            };
         }
     }
 

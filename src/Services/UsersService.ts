@@ -17,7 +17,7 @@ export class UsersService {
         user.created_at = new Date().toISOString();
         user.updated_at = new Date().toISOString();
         let newUser = await userRepo.createUser(user);
-        if(newUser) {
+        if (newUser) {
             return newUser;
         }
         return false;
@@ -30,5 +30,13 @@ export class UsersService {
             return user;
         }
         return false;
+    }
+
+    async ifUserExist(_id: string) {
+        let user: any = await userRepo.selectOne({ _id });
+        console.log(user);
+        if ( user === null || user.error)
+            return false;
+        return true;
     }
 }

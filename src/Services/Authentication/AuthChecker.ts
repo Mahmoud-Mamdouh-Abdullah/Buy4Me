@@ -14,9 +14,9 @@ export class AuthChecker {
     }
 
     async checkLogin() {
-        this.user = await userRepo.findUser({ email: this.email });
+        this.user = await userRepo.selectOne({ email: this.email });
         let encryptedPassword = new Encryptor(this.password).encrypt();
-        if (!this.user) {
+        if (this.user.error) {
             return false;
         }
         if (this.user.password !== encryptedPassword) {

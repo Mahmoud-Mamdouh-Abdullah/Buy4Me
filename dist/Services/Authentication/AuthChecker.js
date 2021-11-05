@@ -66,11 +66,11 @@ var AuthChecker = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _a = this;
-                        return [4 /*yield*/, userRepo.findUser({ email: this.email })];
+                        return [4 /*yield*/, userRepo.selectOne({ email: this.email })];
                     case 1:
                         _a.user = _b.sent();
                         encryptedPassword = new Encryptor_1.Encryptor(this.password).encrypt();
-                        if (!this.user) {
+                        if (this.user.error) {
                             return [2 /*return*/, false];
                         }
                         if (this.user.password !== encryptedPassword) {

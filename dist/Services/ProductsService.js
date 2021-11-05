@@ -35,9 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductsService = void 0;
 var ProductsRepository_1 = require("../Data/Repositories/ProductsRepository");
+var fs_1 = __importDefault(require("fs"));
 var productsRepository = new ProductsRepository_1.ProductsRepository();
 var ProductsService = /** @class */ (function () {
     function ProductsService() {
@@ -80,6 +84,66 @@ var ProductsService = /** @class */ (function () {
                 }
             });
         });
+    };
+    ProductsService.prototype.deleteProductById = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, productsRepository.deleteOne({ _id: id })];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    ProductsService.prototype.editProduct = function (id, reqBody, reqFiles) {
+        return __awaiter(this, void 0, void 0, function () {
+            var body, oldProduct, imgUrls;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        body = this.validteUpdateReques(reqBody, reqFiles);
+                        if (body.error) {
+                            return [2 /*return*/, body];
+                        }
+                        return [4 /*yield*/, productsRepository.selectOneAndUpdate(id, body)];
+                    case 1:
+                        oldProduct = (_a.sent());
+                        if (oldProduct !== null && oldProduct['error'] === undefined) {
+                            imgUrls = oldProduct.images.map(function (img) { return img.url; });
+                            imgUrls.forEach(function (url) {
+                                fs_1.default.unlinkSync(url);
+                            });
+                        }
+                        return [4 /*yield*/, productsRepository.selectOne({ _id: oldProduct._id })];
+                    case 2: return [2 /*return*/, (_a.sent())];
+                }
+            });
+        });
+    };
+    ProductsService.prototype.validteUpdateReques = function (reqBody, reqFiles) {
+        var body = {};
+        var title = reqBody.title, description = reqBody.description, price = reqBody.price, category = reqBody.category;
+        if (title) {
+            body['title'] = title;
+        }
+        if (description) {
+            body['description'] = description;
+        }
+        if (price) {
+            body['price'] = price;
+        }
+        if (category) {
+            body['category'] = category;
+        }
+        if (reqFiles && reqFiles.length > 0) {
+            var images = reqFiles;
+            var imagesUrls = images === null || images === void 0 ? void 0 : images.map(function (image) { return ({ url: image.path }); });
+            body['images'] = imagesUrls;
+        }
+        if (Object.keys(body).length === 0) {
+            return { error: 'Missing Data !!' };
+        }
+        return body;
     };
     return ProductsService;
 }());

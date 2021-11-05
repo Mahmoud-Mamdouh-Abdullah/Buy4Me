@@ -36,20 +36,37 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getByQuery = exports.all = exports.createProduct = void 0;
+exports.updateProduct = exports.deleteProduct = exports.getByQuery = exports.all = exports.createProduct = void 0;
 var ProductsService_1 = require("../Services/ProductsService");
+var UsersService_1 = require("../Services/UsersService");
 var Product_Model_1 = require("../Data/Models/Product.Model");
 var productsService = new ProductsService_1.ProductsService();
+var userService = new UsersService_1.UsersService();
 var createProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var images, imagesUrls, _a, title, description, price, category, product, savingRes;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+    var images, imagesUrls, _a, title, description, price, category, user_id, _b, product, savingRes;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
             case 0:
                 images = req.files;
                 imagesUrls = images === null || images === void 0 ? void 0 : images.map(function (image) { return ({ url: image.path }); });
-                _a = req.body, title = _a.title, description = _a.description, price = _a.price, category = _a.category;
-                if (!title || !description || !price || !category || imagesUrls.length === 0) {
-                    return [2 /*return*/, res.status(400).send({ message: 'invalid or missing data' })];
+                _a = req.body, title = _a.title, description = _a.description, price = _a.price, category = _a.category, user_id = _a.user_id;
+                _b = !title
+                    || !description
+                    || !price
+                    || !category
+                    || !user_id
+                    || imagesUrls.length === 0;
+                if (_b) return [3 /*break*/, 2];
+                return [4 /*yield*/, userService.ifUserExist(user_id)];
+            case 1:
+                _b = !(_c.sent());
+                _c.label = 2;
+            case 2:
+                if (_b) {
+                    return [2 /*return*/, res.status(406).send({ error: 'invalid or missing data' })];
+                }
+                if (imagesUrls.length > 4) {
+                    return [2 /*return*/, res.status(406).send({ error: "The Max Allowed Images to Upload is 4" })];
                 }
                 product = new Product_Model_1.Product({
                     title: title,
@@ -57,12 +74,13 @@ var createProduct = function (req, res) { return __awaiter(void 0, void 0, void 
                     price: price,
                     category: category,
                     images: imagesUrls,
+                    user_id: user_id,
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString()
                 });
                 return [4 /*yield*/, productsService.addProduct(product)];
-            case 1:
-                savingRes = _b.sent();
+            case 3:
+                savingRes = _c.sent();
                 if (!savingRes) {
                     return [2 /*return*/, res.status(500).send({ message: 'Internal Server Error' })];
                 }
@@ -80,7 +98,7 @@ var all = function (req, res) { return __awaiter(void 0, void 0, void 0, functio
             case 1:
                 products = _a.sent();
                 if (products.error) {
-                    return [2 /*return*/, res.status(500).send({ message: 'Internal Server Error' })];
+                    return [2 /*return*/, res.status(501).send({ message: 'Internal Server Error' })];
                 }
                 res.send({ products: products, user: req.body.user });
                 return [2 /*return*/];
@@ -98,7 +116,7 @@ var getByQuery = function (req, res) { return __awaiter(void 0, void 0, void 0, 
             case 1:
                 products = _a.sent();
                 if (products.error) {
-                    res.status(500).send('Internal server error, try again later');
+                    res.status(501).send('Internal server error, try again later');
                 }
                 res.send({ products: products, user: req.body.user });
                 return [2 /*return*/];
@@ -106,3 +124,48 @@ var getByQuery = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.getByQuery = getByQuery;
+var deleteProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, deleteResult;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                id = req.params.id;
+                if (!id) {
+                    return [2 /*return*/, res.status(406).send({ error: 'Invalid or missing data' })];
+                }
+                return [4 /*yield*/, productsService.deleteProductById(id)];
+            case 1:
+                deleteResult = _a.sent();
+                if (deleteResult.error) {
+                    return [2 /*return*/, res.status(501).send('Internal server error, try again later')];
+                }
+                if (deleteResult.deletedCount === 0) {
+                    return [2 /*return*/, res.status(404).send({ error: "Product with id : " + id + " Not Found" })];
+                }
+                res.send({ message: "Product with id : " + id + " was deleted" });
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.deleteProduct = deleteProduct;
+var updateProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, updateResult;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                id = req.params.id;
+                return [4 /*yield*/, productsService.editProduct(id, req.body, req.files)];
+            case 1:
+                updateResult = _a.sent();
+                if (updateResult === null) {
+                    return [2 /*return*/, res.status(404).send({ error: "No Such this ID : '" + id + "'" })];
+                }
+                if (updateResult.error) {
+                    return [2 /*return*/, res.status(404).send(updateResult)];
+                }
+                res.send(updateResult);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.updateProduct = updateProduct;
