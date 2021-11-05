@@ -27,7 +27,16 @@ export class ProductsService {
     }
 
     async deleteProductById(id: string) {
-        return await productsRepository.deleteOne({ _id: id });
+        let deletedProduct = await productsRepository.deleteOne({ _id: id });
+        if (deletedProduct !== null && deletedProduct['error'] === undefined) {
+            let imgUrls = deletedProduct.images.map((img: any) => img.url);
+            imgUrls.forEach((url: string) => {
+                fs.unlinkSync(url);
+            });
+        }
+        return {
+            deletedId: (deletedProduct._id).toString()
+        }
     }
 
     async editProduct(id: string, reqBody: any, reqFiles: any) {

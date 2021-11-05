@@ -39,7 +39,7 @@ export class ProductsRepository {
     async deleteOne(filter: Object = {}) {
         try {
             await ConnectToMongo();
-            return (await Product.deleteOne(filter));
+            return (await Product.findOneAndDelete(filter));
         } catch (e: any) {
             return {
                 error: e.message

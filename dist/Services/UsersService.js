@@ -106,7 +106,6 @@ var UsersService = /** @class */ (function () {
                     case 0: return [4 /*yield*/, userRepo.selectOne({ _id: _id })];
                     case 1:
                         user = _a.sent();
-                        console.log(user);
                         if (user === null || user.error)
                             return [2 /*return*/, false];
                         return [2 /*return*/, true];

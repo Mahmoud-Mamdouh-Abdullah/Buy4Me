@@ -34,7 +34,6 @@ export class UsersService {
 
     async ifUserExist(_id: string) {
         let user: any = await userRepo.selectOne({ _id });
-        console.log(user);
         if ( user === null || user.error)
             return false;
         return true;

@@ -139,9 +139,6 @@ var deleteProduct = function (req, res) { return __awaiter(void 0, void 0, void 
                 if (deleteResult.error) {
                     return [2 /*return*/, res.status(501).send('Internal server error, try again later')];
                 }
-                if (deleteResult.deletedCount === 0) {
-                    return [2 /*return*/, res.status(404).send({ error: "Product with id : " + id + " Not Found" })];
-                }
                 res.send({ message: "Product with id : " + id + " was deleted" });
                 return [2 /*return*/];
         }

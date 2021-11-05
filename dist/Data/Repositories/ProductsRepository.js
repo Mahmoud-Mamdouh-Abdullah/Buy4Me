@@ -121,7 +121,7 @@ var ProductsRepository = /** @class */ (function () {
                         return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, Product_Model_1.Product.deleteOne(filter)];
+                        return [4 /*yield*/, Product_Model_1.Product.findOneAndDelete(filter)];
                     case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         e_4 = _a.sent();
