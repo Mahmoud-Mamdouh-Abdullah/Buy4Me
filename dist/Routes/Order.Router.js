@@ -18,10 +18,10 @@ var OrderRouter = /** @class */ (function () {
         router.use(new AuthenticationMiddleware_1.AuthMiddleware().getMiddlware());
         router.get('/', OrdersController_1.all);
         router.post('/', OrdersController_1.createOrder);
-        router.get('/:id', OrdersController_1.getByOrderId);
-        router.put('/:id', OrdersController_1.updateOrder);
-        router.delete('/:id', OrdersController_1.deleteOrder);
-        router.get('/users/:user_id', OrdersController_1.getOrdersByUserId);
+        router.get('/id/:id', OrdersController_1.getByOrderId);
+        router.put('/id/:id', OrdersController_1.updateOrder);
+        router.delete('/id/:id', OrdersController_1.deleteOrder);
+        router.get('/user/id/:user_id', OrdersController_1.getOrdersByUserId);
         return router;
     };
     return OrderRouter;

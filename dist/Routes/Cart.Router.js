@@ -11,13 +11,13 @@ var CartRouter = /** @class */ (function () {
     function CartRouter() {
     }
     CartRouter.prototype.getPath = function () {
-        return ('/api/cart');
+        return ('/cart');
     };
     CartRouter.prototype.getRouter = function () {
         var router = express_1.default.Router();
         router.use(new AuthenticationMiddleware_1.AuthMiddleware().getMiddlware());
-        router.get('/:id', CartController_1.getCart);
-        router.put('/:id', CartController_1.updateCart);
+        router.get('/id/:id', CartController_1.getCart);
+        router.put('/id/:id', CartController_1.updateCart);
         return router;
     };
     return CartRouter;

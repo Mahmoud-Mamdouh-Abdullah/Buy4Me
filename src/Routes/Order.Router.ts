@@ -22,10 +22,10 @@ export class OrderRouter implements RouterInterface {
 
         router.get('/', all);
         router.post('/', createOrder);
-        router.get('/:id', getByOrderId);
-        router.put('/:id', updateOrder);
-        router.delete('/:id', deleteOrder);
-        router.get('/users/:user_id', getOrdersByUserId);
+        router.get('/id/:id', getByOrderId);
+        router.put('/id/:id', updateOrder);
+        router.delete('/id/:id', deleteOrder);
+        router.get('/user/id/:user_id', getOrdersByUserId);
 
         return router;
     }

@@ -19,10 +19,10 @@ export class ProductRouter implements RouterInterface {
         router.use(new AuthMiddleware().getMiddlware());
 
         router.get('/', all);
-        router.get('/:query', getByQuery);
+        router.get('/search/:query', getByQuery);
         router.post('/', createProduct);
-        router.delete('/:id', deleteProduct);
-        router.put('/:id', updateProduct);
+        router.delete('/id/:id', deleteProduct);
+        router.put('/id/:id', updateProduct);
         return router;
     }
 

@@ -5,15 +5,15 @@ import { AuthMiddleware } from "../Middlewares/AuthenticationMiddleware";
 
 export class CartRouter implements RouterInterface {
     getPath(): string {
-        return ('/api/cart');
+        return ('/cart');
     }
     getRouter(): IRouter {
         const router = express.Router();
 
         router.use(new AuthMiddleware().getMiddlware());
 
-        router.get('/:id', getCart);
-        router.put('/:id', updateCart);
+        router.get('/id/:id', getCart);
+        router.put('/id/:id', updateCart);
 
         return router;
     }

@@ -10,7 +10,7 @@ export class UserRouter implements RouterInterface{
         const router = express.Router();
 
         router.get('/', all);
-        router.get('/:id', getById);
+        router.get('/id/:id', getById);
         router.post('/', createUser);
         router.post('/login', login);
 
