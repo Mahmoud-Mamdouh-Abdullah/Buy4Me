@@ -37,63 +37,118 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersService = void 0;
+var CartRepository_1 = require("../Data/Repositories/CartRepository");
 var UsersRepository_1 = require("../Data/Repositories/UsersRepository");
 var Encryptor_1 = require("./Encryptor");
+var Cart_Model_1 = require("../Data/Models/Cart.Model");
 var userRepo = new UsersRepository_1.UsersRepository();
+var cartRepository = new CartRepository_1.CartRepository();
 var UsersService = /** @class */ (function () {
     function UsersService() {
+        var _this = this;
+        this.ifEmailExist = function (email) { return __awaiter(_this, void 0, void 0, function () {
+            var user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, userRepo.selectOne({ email: email })];
+                    case 1:
+                        user = _a.sent();
+                        if (user === null) {
+                            return [2 /*return*/, false];
+                        }
+                        return [2 /*return*/, true];
+                }
+            });
+        }); };
+        this.findUserAndIfHasCart = function (_id) { return __awaiter(_this, void 0, void 0, function () {
+            var user, cart;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.findById(_id)];
+                    case 1:
+                        user = _a.sent();
+                        if (user === null || user.error) {
+                            return [2 /*return*/, false];
+                        }
+                        return [4 /*yield*/, cartRepository.selectOne({ _id: _id })];
+                    case 2:
+                        cart = _a.sent();
+                        console.log(cart);
+                        if (cart.error || cart._id) {
+                            return [2 /*return*/, false];
+                        }
+                        return [2 /*return*/, true];
+                }
+            });
+        }); };
     }
     UsersService.prototype.findAll = function (filter) {
         if (filter === void 0) { filter = {}; }
         return __awaiter(this, void 0, void 0, function () {
-            var users;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, userRepo.find(filter)];
-                    case 1:
-                        users = _a.sent();
-                        if (users) {
-                            return [2 /*return*/, users];
-                        }
-                        return [2 /*return*/, false];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
     UsersService.prototype.create = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var encryptor, newUser;
+            var encryptor, newUser, cart;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
+                    case 0: return [4 /*yield*/, this.ifEmailExist(user.email)];
+                    case 1:
+                        if (!!(_a.sent())) return [3 /*break*/, 4];
                         encryptor = new Encryptor_1.Encryptor(user.password);
                         user.password = encryptor.encrypt();
                         user.created_at = new Date().toISOString();
                         user.updated_at = new Date().toISOString();
-                        return [4 /*yield*/, userRepo.createUser(user)];
-                    case 1:
+                        return [4 /*yield*/, userRepo.insert(user)];
+                    case 2:
                         newUser = _a.sent();
-                        if (newUser) {
-                            return [2 /*return*/, newUser];
-                        }
-                        return [2 /*return*/, false];
+                        return [4 /*yield*/, this.addNewCart(newUser._id)];
+                    case 3:
+                        cart = _a.sent();
+                        return [2 /*return*/, {
+                                user: newUser,
+                                cart: cart
+                            }];
+                    case 4: return [2 /*return*/, {
+                            error: 'This email already exist !!'
+                        }];
                 }
             });
         });
     };
-    UsersService.prototype.findById = function (id) {
+    UsersService.prototype.addNewCart = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var cart;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        cart = new Cart_Model_1.Cart({
+                            _id: id,
+                            products_list: [],
+                            created_at: new Date().toISOString(),
+                            updated_at: new Date().toISOString()
+                        });
+                        return [4 /*yield*/, cartRepository.insert(cart)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    UsersService.prototype.findById = function (_id) {
         return __awaiter(this, void 0, void 0, function () {
             var user;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, userRepo.getUserById(id)];
+                    case 0: return [4 /*yield*/, userRepo.selectOne({ _id: _id })];
                     case 1:
                         user = (_a.sent());
-                        console.log(user);
-                        if (user) {
-                            return [2 /*return*/, user];
-                        }
-                        return [2 /*return*/, false];
+                        return [2 /*return*/, user];
                 }
             });
         });

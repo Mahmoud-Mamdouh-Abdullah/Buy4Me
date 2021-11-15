@@ -1,12 +1,12 @@
-import { mongo } from 'mongoose';
-import { User } from '../Models/User.Model';
-import { ConnectToMongo } from '../../Core/ConnectToMongo';
+import { ConnectToMongo } from "../../Core/ConnectToMongo";
+import { Cart } from "../Models/Cart.Model";
 
-export class UsersRepository {
-    async find(filter: Object = {}) {
+export class CartRepository {
+
+    async insert(cart: any): Promise<any> {
         try {
             await ConnectToMongo();
-            return (await User.find(filter));
+            return (await Cart.create(cart));
         } catch (e: any) {
             return {
                 error: e.message
@@ -14,10 +14,10 @@ export class UsersRepository {
         }
     }
 
-    async insert(user: any) {
+    async selectOne(filter: Object): Promise<any> {
         try {
             await ConnectToMongo();
-            return (await User.create(user));
+            return (await Cart.findOne(filter));
         } catch (e: any) {
             return {
                 error: e.message
@@ -25,14 +25,15 @@ export class UsersRepository {
         }
     }
 
-    async selectOne(filter: Object = {}) {
+    async update(userId: string, body: Object): Promise<any> {
         try {
             await ConnectToMongo();
-            return (await User.findOne(filter));
+            return (await Cart.findByIdAndUpdate(userId, body));
         } catch (e: any) {
             return {
                 error: e.message
-            };
+            }
         }
     }
+
 }

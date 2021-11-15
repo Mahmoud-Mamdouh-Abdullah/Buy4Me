@@ -15,11 +15,11 @@ export class TokenService {
     }
 
     async ifTokenExist(token: string) {
-        let tokenObject = await tokenRepo.findToken({token});
-        if(!tokenObject) {
+        let tokenObject = await tokenRepo.findToken({ token });
+        if (!tokenObject) {
             return false;
         }
-        this.user = await userRepo.getUserById(tokenObject.user_id);
+        this.user = await userRepo.selectOne({ _id: tokenObject.user_id });
         return true;
     }
 

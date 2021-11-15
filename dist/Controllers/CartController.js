@@ -36,60 +36,43 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getById = exports.all = exports.createUser = void 0;
-var User_Model_1 = require("../Data/Models/User.Model");
-var UsersService_1 = require("../Services/UsersService");
-var usersService = new UsersService_1.UsersService();
-var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, name, email, password, address, user, result;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _a = req.body, name = _a.name, email = _a.email, password = _a.password, address = _a.address;
-                if (!name || !email || !password || !address) {
-                    return [2 /*return*/, res.send({ message: "some data is missing" })];
-                }
-                user = new User_Model_1.User({ name: name, email: email, password: password, address: address });
-                return [4 /*yield*/, usersService.create(user)];
-            case 1:
-                result = _b.sent();
-                if (result.error) {
-                    return [2 /*return*/, res.send({ error: result.error })];
-                }
-                res.send(result);
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.createUser = createUser;
-var all = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var users;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, usersService.findAll()];
-            case 1:
-                users = _a.sent();
-                res.send({ users: users });
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.all = all;
-var getById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, user;
+exports.updateCart = exports.getCart = void 0;
+var CartService_1 = require("../Services/CartService");
+var cartService = new CartService_1.CartService();
+var getCart = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, cart;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 id = req.params.id;
-                return [4 /*yield*/, usersService.findById(id)];
+                return [4 /*yield*/, cartService.getCartById(id)];
             case 1:
-                user = _a.sent();
-                if (user === null || user.error) {
+                cart = _a.sent();
+                if (cart === null || cart.error) {
                     return [2 /*return*/, res.send({ message: "ID '" + id + "' is invalid" })];
                 }
-                res.send({ user: user });
+                res.send(cart);
                 return [2 /*return*/];
         }
     });
 }); };
-exports.getById = getById;
+exports.getCart = getCart;
+var updateCart = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, products_list, cart;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                id = req.params.id;
+                products_list = req.body.products_list;
+                return [4 /*yield*/, cartService.editCart(id, products_list)];
+            case 1:
+                cart = _a.sent();
+                if (cart.error) {
+                    return [2 /*return*/, res.send(cart)];
+                }
+                res.send({ message: "Cart with ID " + id + " updated successfully" });
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.updateCart = updateCart;

@@ -67,7 +67,7 @@ var TokenService = /** @class */ (function () {
                             return [2 /*return*/, false];
                         }
                         _a = this;
-                        return [4 /*yield*/, userRepo.getUserById(tokenObject.user_id)];
+                        return [4 /*yield*/, userRepo.selectOne({ _id: tokenObject.user_id })];
                     case 2:
                         _a.user = _b.sent();
                         return [2 /*return*/, true];

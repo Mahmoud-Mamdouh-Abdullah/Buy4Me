@@ -10,7 +10,7 @@ var MyServer = /** @class */ (function () {
         this._server = (0, express_1.default)();
         this._server.use(express_1.default.json());
         this._server.get('/', function (req, res) {
-            res.send({ messages: 'this is the Server Endpoint' });
+            res.send({ messages: 'this is the E-Commerce Server Endpoint' });
         });
     }
     MyServer.prototype.addRouter = function (router) {

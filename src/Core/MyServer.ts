@@ -10,7 +10,7 @@ export class MyServer {
     constructor() {
         this._server.use(express.json());
         this._server.get('/', function (req: Request, res: Response) {
-            res.send({ messages: 'this is the Server Endpoint' });
+            res.send({ messages: 'this is the E-Commerce Server Endpoint' });
         });
     }
 

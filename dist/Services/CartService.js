@@ -36,80 +36,45 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsersRepository = void 0;
-var User_Model_1 = require("../Models/User.Model");
-var ConnectToMongo_1 = require("../../Core/ConnectToMongo");
-var UsersRepository = /** @class */ (function () {
-    function UsersRepository() {
+exports.CartService = void 0;
+var CartRepository_1 = require("../Data/Repositories/CartRepository");
+var cartRepository = new CartRepository_1.CartRepository();
+var CartService = /** @class */ (function () {
+    function CartService() {
     }
-    UsersRepository.prototype.find = function (filter) {
-        if (filter === void 0) { filter = {}; }
+    CartService.prototype.editCart = function (id, body) {
         return __awaiter(this, void 0, void 0, function () {
-            var e_1;
+            var products_list, cart;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
+                        products_list = {
+                            products_list: body.map(function (_id) { return ({ _id: _id }); }),
+                            updated_at: new Date().toISOString()
+                        };
+                        return [4 /*yield*/, cartRepository.update(id, products_list)];
                     case 1:
-                        _a.sent();
-                        return [4 /*yield*/, User_Model_1.User.find(filter)];
-                    case 2: return [2 /*return*/, (_a.sent())];
-                    case 3:
-                        e_1 = _a.sent();
-                        return [2 /*return*/, {
-                                error: e_1.message
-                            }];
-                    case 4: return [2 /*return*/];
+                        cart = _a.sent();
+                        if (cart === null) {
+                            return [2 /*return*/, {
+                                    error: 'Invalid or missing ID'
+                                }];
+                        }
+                        return [2 /*return*/, cart];
                 }
             });
         });
     };
-    UsersRepository.prototype.insert = function (user) {
+    CartService.prototype.getCartById = function (_id) {
         return __awaiter(this, void 0, void 0, function () {
-            var e_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, User_Model_1.User.create(user)];
-                    case 2: return [2 /*return*/, (_a.sent())];
-                    case 3:
-                        e_2 = _a.sent();
-                        return [2 /*return*/, {
-                                error: e_2.message
-                            }];
-                    case 4: return [2 /*return*/];
+                    case 0: return [4 /*yield*/, cartRepository.selectOne({ _id: _id })];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    UsersRepository.prototype.selectOne = function (filter) {
-        if (filter === void 0) { filter = {}; }
-        return __awaiter(this, void 0, void 0, function () {
-            var e_3;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, User_Model_1.User.findOne(filter)];
-                    case 2: return [2 /*return*/, (_a.sent())];
-                    case 3:
-                        e_3 = _a.sent();
-                        return [2 /*return*/, {
-                                error: e_3.message
-                            }];
-                    case 4: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    return UsersRepository;
+    return CartService;
 }());
-exports.UsersRepository = UsersRepository;
+exports.CartService = CartService;

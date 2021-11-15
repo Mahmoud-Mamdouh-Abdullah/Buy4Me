@@ -4,7 +4,6 @@ import { UsersService } from "../Services/UsersService";
 
 const usersService = new UsersService();
 
-
 export const createUser = async (req: Request, res: Response) => {
     const { name, email, password, address } = req.body;
     if (!name || !email || !password || !address) {
@@ -12,8 +11,8 @@ export const createUser = async (req: Request, res: Response) => {
     }
     const user = new User({ name, email, password, address });
     const result = await usersService.create(user);
-    if(!result) {
-        return res.send({ message: "An error occured, please try again later" });
+    if(result.error) {
+        return res.send({ error: result.error });
     }
     res.send(result);
 }
@@ -26,7 +25,7 @@ export const all = async (req: Request, res: Response) => {
 export const getById = async (req: Request, res: Response) => {
     let id = req.params.id;
     let user = await usersService.findById(id);
-    if(!user) {
+    if(user === null || user.error) {
         return res.send({message:`ID '${id}' is invalid`});
     }
     res.send({ user });
