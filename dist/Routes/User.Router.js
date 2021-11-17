@@ -16,7 +16,7 @@ var UserRouter = /** @class */ (function () {
     UserRouter.prototype.getRouter = function () {
         var router = express_1.default.Router();
         router.get('/', Users_Controller_1.all);
-        router.get('/id/:id', Users_Controller_1.getById);
+        router.get('/id/:id', Users_Controller_1.getUserById);
         router.post('/', Users_Controller_1.createUser);
         router.post('/login', AuthController_1.login);
         return router;

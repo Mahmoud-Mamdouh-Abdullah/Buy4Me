@@ -36,14 +36,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsersRepository = void 0;
-var User_Model_1 = require("../Models/User.Model");
+exports.WishRepository = void 0;
 var ConnectToMongo_1 = require("../../Core/ConnectToMongo");
-var UsersRepository = /** @class */ (function () {
-    function UsersRepository() {
+var Wish_Model_1 = require("../Models/Wish.Model");
+var WishRepository = /** @class */ (function () {
+    function WishRepository() {
     }
-    UsersRepository.prototype.find = function (filter) {
-        if (filter === void 0) { filter = {}; }
+    WishRepository.prototype.insert = function (wish) {
         return __awaiter(this, void 0, void 0, function () {
             var e_1;
             return __generator(this, function (_a) {
@@ -53,7 +52,7 @@ var UsersRepository = /** @class */ (function () {
                         return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, User_Model_1.User.find(filter)];
+                        return [4 /*yield*/, Wish_Model_1.Wish.create(wish)];
                     case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         e_1 = _a.sent();
@@ -65,7 +64,7 @@ var UsersRepository = /** @class */ (function () {
             });
         });
     };
-    UsersRepository.prototype.insert = function (user) {
+    WishRepository.prototype.selectOne = function (filter) {
         return __awaiter(this, void 0, void 0, function () {
             var e_2;
             return __generator(this, function (_a) {
@@ -75,7 +74,7 @@ var UsersRepository = /** @class */ (function () {
                         return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, User_Model_1.User.create(user)];
+                        return [4 /*yield*/, Wish_Model_1.Wish.findOne(filter)];
                     case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         e_2 = _a.sent();
@@ -87,8 +86,7 @@ var UsersRepository = /** @class */ (function () {
             });
         });
     };
-    UsersRepository.prototype.selectOne = function (filter) {
-        if (filter === void 0) { filter = {}; }
+    WishRepository.prototype.update = function (userId, body) {
         return __awaiter(this, void 0, void 0, function () {
             var e_3;
             return __generator(this, function (_a) {
@@ -98,7 +96,7 @@ var UsersRepository = /** @class */ (function () {
                         return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, User_Model_1.User.findOne(filter).select(['name', 'email', 'address'])];
+                        return [4 /*yield*/, Wish_Model_1.Wish.findByIdAndUpdate(userId, body)];
                     case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         e_3 = _a.sent();
@@ -110,6 +108,6 @@ var UsersRepository = /** @class */ (function () {
             });
         });
     };
-    return UsersRepository;
+    return WishRepository;
 }());
-exports.UsersRepository = UsersRepository;
+exports.WishRepository = WishRepository;

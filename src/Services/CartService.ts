@@ -1,5 +1,4 @@
 import { CartRepository } from "../Data/Repositories/CartRepository";
-import { UsersService } from "./UsersService";
 
 const cartRepository = new CartRepository();
 

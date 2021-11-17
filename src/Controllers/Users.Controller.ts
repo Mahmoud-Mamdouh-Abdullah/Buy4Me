@@ -11,7 +11,7 @@ export const createUser = async (req: Request, res: Response) => {
     }
     const user = new User({ name, email, password, address });
     const result = await usersService.create(user);
-    if(result.error) {
+    if (result.error) {
         return res.send({ error: result.error });
     }
     res.send(result);
@@ -22,11 +22,11 @@ export const all = async (req: Request, res: Response) => {
     res.send({ users });
 }
 
-export const getById = async (req: Request, res: Response) => {
+export const getUserById = async (req: Request, res: Response) => {
     let id = req.params.id;
     let user = await usersService.findById(id);
-    if(user === null || user.error) {
-        return res.send({message:`ID '${id}' is invalid`});
+    if (user === null || user.error) {
+        return res.send({ message: `ID '${id}' is invalid` });
     }
-    res.send({ user });
+    res.send(user);
 }
