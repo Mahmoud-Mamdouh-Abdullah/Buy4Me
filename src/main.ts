@@ -6,7 +6,6 @@ import { ProductRouter } from './Routes/Product.Router';
 import { UserRouter } from './Routes/User.Router';
 import { WishRouter } from './Routes/Wish.Router';
 
-
 /**
  * create the app server
  */
@@ -24,4 +23,5 @@ app.addRouter(new WishRouter());
 /**
  * listen to the server
  */
-app.listen(5000);
+//@ts-ignore
+app.listen(process.env.PORT);

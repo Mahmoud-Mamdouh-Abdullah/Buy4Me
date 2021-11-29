@@ -35,18 +35,25 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConnectToMongo = void 0;
 var mongoose_1 = require("mongoose");
-var mongoUrl = 'mongodb://localhost:27017/e-commerce';
+var dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+var mongoUrl = process.env.MONGO_URL;
 var ConnectToMongo = function () { return __awaiter(void 0, void 0, void 0, function () {
     var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
+                //@ts-ignore
                 return [4 /*yield*/, (0, mongoose_1.connect)(mongoUrl)];
             case 1:
+                //@ts-ignore
                 _b.sent();
                 return [3 /*break*/, 3];
             case 2:

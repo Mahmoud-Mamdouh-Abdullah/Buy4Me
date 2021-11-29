@@ -22,7 +22,7 @@ export class MyServer {
         this._server.use(middlware.getMiddlware());
     }
 
-    listen(port: number) {
+    listen(port: number | string) {
         this._server.listen(port, () => {
             console.log(`server running ...`);
             console.log(`server listen on port 5000`);

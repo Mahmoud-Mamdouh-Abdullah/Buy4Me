@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Mahmoud-Mamdouh-Abdullah/E-Commerce#readme",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongoose": "^6.0.12",
     "multer": "^1.4.3",

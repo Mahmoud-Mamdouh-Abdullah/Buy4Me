@@ -1,8 +1,12 @@
 import { connect } from "mongoose"
+import dotenv from 'dotenv';
 
-const mongoUrl = 'mongodb://localhost:27017/e-commerce';
+dotenv.config();
+
+const mongoUrl = process.env.MONGO_URL;
 export const ConnectToMongo = async () => {
     try {
+        //@ts-ignore
         await connect(mongoUrl);
     } catch {
         throw new Error('Failed to connect to server');

@@ -23,4 +23,5 @@ app.addRouter(new Wish_Router_1.WishRouter());
 /**
  * listen to the server
  */
-app.listen(5000);
+//@ts-ignore
+app.listen(process.env.PORT);
