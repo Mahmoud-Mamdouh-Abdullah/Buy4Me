@@ -98,7 +98,7 @@ var UsersRepository = /** @class */ (function () {
                         return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, User_Model_1.User.findOne(filter).select(['name', 'email', 'address'])];
+                        return [4 /*yield*/, User_Model_1.User.findOne(filter)];
                     case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         e_3 = _a.sent();

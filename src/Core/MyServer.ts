@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { UserRouter } from '../Routes/User.Router';
+import cors from 'cors';
 import { AppMiddlwareInterface } from './Interfaces/AppMiddleware.Interface';
 import { RouterInterface } from './Interfaces/Router.Interface';
 
@@ -9,6 +9,7 @@ export class MyServer {
 
     constructor() {
         this._server.use(express.json());
+        this._server.use(cors());
         this._server.get('/', function (req: Request, res: Response) {
             res.send({ messages: 'this is the E-Commerce Server Endpoint' });
         });

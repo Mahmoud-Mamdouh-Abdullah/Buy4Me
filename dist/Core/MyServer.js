@@ -5,10 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MyServer = void 0;
 var express_1 = __importDefault(require("express"));
+var cors_1 = __importDefault(require("cors"));
 var MyServer = /** @class */ (function () {
     function MyServer() {
         this._server = (0, express_1.default)();
         this._server.use(express_1.default.json());
+        this._server.use((0, cors_1.default)());
         this._server.get('/', function (req, res) {
             res.send({ messages: 'this is the E-Commerce Server Endpoint' });
         });

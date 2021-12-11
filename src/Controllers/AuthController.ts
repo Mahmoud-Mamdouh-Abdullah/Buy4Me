@@ -13,5 +13,5 @@ export const login = async (req: Request, res: Response) => {
     if (!(await checker.checkLogin())) {
         return res.status(404).send({ message: "email or password is incorrect" });
     }
-    res.json({ token: (await checker.saveTokenAndGet()) });
+    res.json({ data: (await checker.saveTokenAndGet()) });
 }

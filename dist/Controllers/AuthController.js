@@ -59,7 +59,7 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
                 _d = {};
                 return [4 /*yield*/, checker.saveTokenAndGet()];
             case 2:
-                _c.apply(_b, [(_d.token = (_e.sent()), _d)]);
+                _c.apply(_b, [(_d.data = (_e.sent()), _d)]);
                 return [2 /*return*/];
         }
     });

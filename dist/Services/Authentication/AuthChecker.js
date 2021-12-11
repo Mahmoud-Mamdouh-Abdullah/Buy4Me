@@ -107,7 +107,10 @@ var AuthChecker = /** @class */ (function () {
                             updated_at: new Date().toISOString()
                         });
                         tokenService.create(tokenObject);
-                        return [2 /*return*/, token];
+                        return [2 /*return*/, {
+                                user: this.user,
+                                token: token
+                            }];
                 }
             });
         });

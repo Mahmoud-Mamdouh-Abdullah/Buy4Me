@@ -28,7 +28,7 @@ export class UsersRepository {
     async selectOne(filter: Object = {}) {
         try {
             await ConnectToMongo();
-            return (await User.findOne(filter).select(['name', 'email', 'address']));
+            return (await User.findOne(filter));
         } catch (e: any) {
             return {
                 error: e.message

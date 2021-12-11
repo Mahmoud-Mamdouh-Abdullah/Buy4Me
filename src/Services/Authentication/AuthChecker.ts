@@ -42,6 +42,9 @@ export class AuthChecker {
             updated_at: new Date().toISOString()
         });
         tokenService.create(tokenObject);
-        return token;
+        return {
+            user: this.user,
+            token
+        };
     }
 }
