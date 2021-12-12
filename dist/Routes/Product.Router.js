@@ -7,7 +7,6 @@ exports.ProductRouter = void 0;
 var express_1 = __importDefault(require("express"));
 var MulterMiddleware_1 = require("../Middlewares/MulterMiddleware");
 var ProductsController_1 = require("../Controllers/ProductsController");
-var AuthenticationMiddleware_1 = require("../Middlewares/AuthenticationMiddleware");
 var ProductRouter = /** @class */ (function () {
     function ProductRouter() {
     }
@@ -18,7 +17,6 @@ var ProductRouter = /** @class */ (function () {
         var router = express_1.default.Router();
         var upload = (new MulterMiddleware_1.MulterMiddleware()).getMiddlware();
         router.use(upload.array('images', 4));
-        router.use(new AuthenticationMiddleware_1.AuthMiddleware().getMiddlware());
         router.get('/', ProductsController_1.all);
         router.get('/search/:query', ProductsController_1.getByQuery);
         router.get('/category/:category', ProductsController_1.getProductsByCategory);

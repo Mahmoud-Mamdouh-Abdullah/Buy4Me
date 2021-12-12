@@ -16,8 +16,6 @@ export class ProductRouter implements RouterInterface {
         const upload = (new MulterMiddleware()).getMiddlware();
         router.use(upload.array('images', 4));
 
-        router.use(new AuthMiddleware().getMiddlware());
-
         router.get('/', all);
         router.get('/search/:query', getByQuery);
         router.get('/category/:category', getProductsByCategory);

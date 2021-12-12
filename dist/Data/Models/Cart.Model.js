@@ -5,7 +5,8 @@ var mongoose_1 = require("mongoose");
 var CartSchema = new mongoose_1.Schema({
     _id: mongoose_1.Types.ObjectId,
     products_list: [{
-            _id: mongoose_1.Types.ObjectId
+            _id: mongoose_1.Types.ObjectId,
+            qty: Number
         }],
     created_at: String,
     updated_at: String

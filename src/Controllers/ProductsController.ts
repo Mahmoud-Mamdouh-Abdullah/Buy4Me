@@ -11,11 +11,12 @@ export const createProduct = async (req: Request, res: Response) => {
     let imagesUrls = images?.map((image: any) => (
         { url: image.path }
     ));
-    const { title, description, price, category, user_id } = req.body;
+    const { title, description, price, category, brandName, user_id } = req.body;
     if (!title
         || !description
         || !price
         || !category
+        || !brandName
         || !user_id
         || imagesUrls.length === 0
         || !(await userService.ifUserExist(user_id))) {
@@ -29,6 +30,7 @@ export const createProduct = async (req: Request, res: Response) => {
         description,
         price,
         category,
+        brandName,
         images: imagesUrls,
         user_id,
         created_at: new Date().toISOString(),
@@ -66,8 +68,8 @@ export const getProductsByCategory = async (req: Request, res: Response) => {
             error: 'Invalid or missing data !!'
         }
     }
-    const product = await productsService.getPodcutsByCategory(category);
-    res.send({ product });
+    const products = await productsService.getPodcutsByCategory(category);
+    res.send({ products });
 }
 
 export const deleteProduct = async (req: Request, res: Response) => {

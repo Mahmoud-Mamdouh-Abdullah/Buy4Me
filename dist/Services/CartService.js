@@ -49,7 +49,10 @@ var CartService = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         products_list = {
-                            products_list: body.map(function (_id) { return ({ _id: _id }); }),
+                            products_list: body.map(function (productItem) { return ({
+                                _id: productItem.id,
+                                qty: productItem.qty
+                            }); }),
                             updated_at: new Date().toISOString()
                         };
                         return [4 /*yield*/, cartRepository.update(id, products_list)];

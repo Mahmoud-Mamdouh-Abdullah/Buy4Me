@@ -43,17 +43,18 @@ var Product_Model_1 = require("../Data/Models/Product.Model");
 var productsService = new ProductsService_1.ProductsService();
 var userService = new UsersService_1.UsersService();
 var createProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var images, imagesUrls, _a, title, description, price, category, user_id, _b, product, savingRes;
+    var images, imagesUrls, _a, title, description, price, category, brandName, user_id, _b, product, savingRes;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
                 images = req.files;
                 imagesUrls = images === null || images === void 0 ? void 0 : images.map(function (image) { return ({ url: image.path }); });
-                _a = req.body, title = _a.title, description = _a.description, price = _a.price, category = _a.category, user_id = _a.user_id;
+                _a = req.body, title = _a.title, description = _a.description, price = _a.price, category = _a.category, brandName = _a.brandName, user_id = _a.user_id;
                 _b = !title
                     || !description
                     || !price
                     || !category
+                    || !brandName
                     || !user_id
                     || imagesUrls.length === 0;
                 if (_b) return [3 /*break*/, 2];
@@ -73,6 +74,7 @@ var createProduct = function (req, res) { return __awaiter(void 0, void 0, void 
                     description: description,
                     price: price,
                     category: category,
+                    brandName: brandName,
                     images: imagesUrls,
                     user_id: user_id,
                     created_at: new Date().toISOString(),
@@ -125,7 +127,7 @@ var getByQuery = function (req, res) { return __awaiter(void 0, void 0, void 0, 
 }); };
 exports.getByQuery = getByQuery;
 var getProductsByCategory = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var category, product;
+    var category, products;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -137,8 +139,8 @@ var getProductsByCategory = function (req, res) { return __awaiter(void 0, void 
                 }
                 return [4 /*yield*/, productsService.getPodcutsByCategory(category)];
             case 1:
-                product = _a.sent();
-                res.send({ product: product });
+                products = _a.sent();
+                res.send({ products: products });
                 return [2 /*return*/];
         }
     });
