@@ -59,6 +59,17 @@ export const getByQuery = async (req: Request, res: Response) => {
     res.send({ products, user: req.body.user });
 }
 
+export const getProductsByCategory = async (req: Request, res: Response) => {
+    const category = req.params.category;
+    if (!category) {
+        return {
+            error: 'Invalid or missing data !!'
+        }
+    }
+    const product = await productsService.getPodcutsByCategory(category);
+    res.send({ product });
+}
+
 export const deleteProduct = async (req: Request, res: Response) => {
     let id = req.params.id;
     if (!id) {

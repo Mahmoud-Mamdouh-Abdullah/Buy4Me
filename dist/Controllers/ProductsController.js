@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateProduct = exports.deleteProduct = exports.getByQuery = exports.all = exports.createProduct = void 0;
+exports.updateProduct = exports.deleteProduct = exports.getProductsByCategory = exports.getByQuery = exports.all = exports.createProduct = void 0;
 var ProductsService_1 = require("../Services/ProductsService");
 var UsersService_1 = require("../Services/UsersService");
 var Product_Model_1 = require("../Data/Models/Product.Model");
@@ -124,6 +124,26 @@ var getByQuery = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.getByQuery = getByQuery;
+var getProductsByCategory = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var category, product;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                category = req.params.category;
+                if (!category) {
+                    return [2 /*return*/, {
+                            error: 'Invalid or missing data !!'
+                        }];
+                }
+                return [4 /*yield*/, productsService.getPodcutsByCategory(category)];
+            case 1:
+                product = _a.sent();
+                res.send({ product: product });
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.getProductsByCategory = getProductsByCategory;
 var deleteProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var id, deleteResult;
     return __generator(this, function (_a) {

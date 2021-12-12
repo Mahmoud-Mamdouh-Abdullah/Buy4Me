@@ -21,6 +21,7 @@ var ProductRouter = /** @class */ (function () {
         router.use(new AuthenticationMiddleware_1.AuthMiddleware().getMiddlware());
         router.get('/', ProductsController_1.all);
         router.get('/search/:query', ProductsController_1.getByQuery);
+        router.get('/category/:category', ProductsController_1.getProductsByCategory);
         router.post('/', ProductsController_1.createProduct);
         router.delete('/id/:id', ProductsController_1.deleteProduct);
         router.put('/id/:id', ProductsController_1.updateProduct);
