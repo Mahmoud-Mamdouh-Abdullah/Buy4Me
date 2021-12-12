@@ -42,7 +42,7 @@ var Category_Model_1 = require("../Models/Category.Model");
 var CategoryRepository = /** @class */ (function () {
     function CategoryRepository() {
     }
-    CategoryRepository.prototype.insert = function (name) {
+    CategoryRepository.prototype.insert = function (data) {
         return __awaiter(this, void 0, void 0, function () {
             var e_1;
             return __generator(this, function (_a) {
@@ -52,7 +52,7 @@ var CategoryRepository = /** @class */ (function () {
                         return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, Category_Model_1.Category.create({ name: name })];
+                        return [4 /*yield*/, Category_Model_1.Category.create(data)];
                     case 2: return [2 /*return*/, _a.sent()];
                     case 3:
                         e_1 = _a.sent();

@@ -2,14 +2,18 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { AppMiddlwareInterface } from './Interfaces/AppMiddleware.Interface';
 import { RouterInterface } from './Interfaces/Router.Interface';
-
+import path from 'path';
 
 export class MyServer {
     private readonly _server = express();
 
     constructor() {
         this._server.use(express.json());
+
         this._server.use(cors());
+
+        this._server.use('/images', express.static('images'));
+
         this._server.get('/', function (req: Request, res: Response) {
             res.send({ messages: 'this is the E-Commerce Server Endpoint' });
         });

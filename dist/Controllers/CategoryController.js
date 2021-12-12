@@ -40,14 +40,19 @@ exports.all = exports.createCategory = void 0;
 var CategoryService_1 = require("../Services/CategoryService");
 var categoryService = new CategoryService_1.CategoryService();
 var createCategory = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var name, category;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var name, imgUrl, category;
+    var _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
                 name = req.body.name;
-                return [4 /*yield*/, categoryService.addCategory(name)];
+                imgUrl = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
+                if (!name || !imgUrl) {
+                    return [2 /*return*/, res.send({ error: 'Invalid or missing data !!' })];
+                }
+                return [4 /*yield*/, categoryService.addCategory(name, imgUrl)];
             case 1:
-                category = _a.sent();
+                category = _b.sent();
                 if (category.error) {
                     return [2 /*return*/, res.send({ error: 'Something wrong was happened !!' })];
                 }

@@ -42,11 +42,14 @@ var categoryRepository = new CategoryRepository_1.CategoryRepository();
 var CategoryService = /** @class */ (function () {
     function CategoryService() {
     }
-    CategoryService.prototype.addCategory = function (name) {
+    CategoryService.prototype.addCategory = function (name, imgUrl) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, categoryRepository.insert(name)];
+                    case 0: return [4 /*yield*/, categoryRepository.insert({
+                            name: name,
+                            imgUrl: imgUrl
+                        })];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });

@@ -5,7 +5,11 @@ const categoryService = new CategoryService();
 
 export const createCategory = async (req: Request, res: Response) => {
     let name = req.body.name;
-    let category = await categoryService.addCategory(name);
+    let imgUrl = req.file?.path;
+    if(!name || !imgUrl) {
+        return res.send({ error: 'Invalid or missing data !!' });
+    }
+    let category = await categoryService.addCategory(name, imgUrl);
     if (category.error) {
         return res.send({ error: 'Something wrong was happened !!' });
     }

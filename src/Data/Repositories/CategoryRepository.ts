@@ -3,10 +3,10 @@ import { Category } from "../Models/Category.Model";
 
 export class CategoryRepository {
 
-    async insert(name: string) {
+    async insert(data: Object) {
         try {
             await ConnectToMongo();
-            return await Category.create({ name });
+            return await Category.create(data);
         } catch (e: any) {
             return {
                 error: e.message

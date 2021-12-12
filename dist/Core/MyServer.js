@@ -11,6 +11,7 @@ var MyServer = /** @class */ (function () {
         this._server = (0, express_1.default)();
         this._server.use(express_1.default.json());
         this._server.use((0, cors_1.default)());
+        this._server.use('/images', express_1.default.static('images'));
         this._server.get('/', function (req, res) {
             res.send({ messages: 'this is the E-Commerce Server Endpoint' });
         });
