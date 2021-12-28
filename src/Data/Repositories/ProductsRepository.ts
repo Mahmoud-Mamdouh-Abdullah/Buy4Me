@@ -14,10 +14,10 @@ export class ProductsRepository {
         }
     }
 
-    async selectOne(filter: Object = {}): Promise<any> {
+    async selectOne(filter: Object = {}, fields: string = ''): Promise<any> {
         try {
             await ConnectToMongo();
-            return (await Product.findOne(filter));
+            return (await Product.findOne(filter).select(fields));
         } catch (e: any) {
             return {
                 error: e.message

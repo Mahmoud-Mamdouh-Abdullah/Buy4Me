@@ -19,6 +19,10 @@ export class ProductsService {
         return (await productsRepository.selectAll({ category }));
     }
 
+    async getProductById(_id: string) {
+        return (await productsRepository.selectOne({ _id }));
+    }
+
     async searchProducts(query: string) {
         let filter = {
             $or: [

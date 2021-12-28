@@ -25,10 +25,10 @@ export class UsersRepository {
         }
     }
 
-    async selectOne(filter: Object = {}) {
+    async selectOne(filter: Object = {}, fields: string = '') {
         try {
             await ConnectToMongo();
-            return (await User.findOne(filter));
+            return (await User.findOne(filter).select(fields));
         } catch (e: any) {
             return {
                 error: e.message

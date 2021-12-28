@@ -72,6 +72,17 @@ export const getProductsByCategory = async (req: Request, res: Response) => {
     res.send({ products });
 }
 
+export const getProductById = async (req: Request, res: Response) => {
+    const id = req.params.id;
+    if (!id) {
+        return {
+            error: 'Invalid or missing data !!'
+        }
+    }
+    const product = await productsService.getProductById(id);
+    res.send(product);
+}
+
 export const deleteProduct = async (req: Request, res: Response) => {
     let id = req.params.id;
     if (!id) {

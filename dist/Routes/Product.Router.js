@@ -18,6 +18,7 @@ var ProductRouter = /** @class */ (function () {
         var upload = (new MulterMiddleware_1.MulterMiddleware()).getMiddlware();
         router.use(upload.array('images', 4));
         router.get('/', ProductsController_1.all);
+        router.get('/id/:id', ProductsController_1.getProductById);
         router.get('/search/:query', ProductsController_1.getByQuery);
         router.get('/category/:category', ProductsController_1.getProductsByCategory);
         router.post('/', ProductsController_1.createProduct);

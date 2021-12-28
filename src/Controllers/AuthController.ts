@@ -7,11 +7,12 @@ const authService = new AuthService();
 export const login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
     if (!email || !password) {
-        return res.status(404).send({ message: "invalid or missing data" });
+        return res.send({ message: "invalid or missing data" });
     }
     let checker = authService.login(email, password);
     if (!(await checker.checkLogin())) {
-        return res.status(404).send({ message: "email or password is incorrect" });
+        return res.send({ message: "email or password is incorrect" });
     }
-    res.json({ data: (await checker.saveTokenAndGet()) });
+    const data = (await checker.saveTokenAndGet());
+    res.json({ data });
 }

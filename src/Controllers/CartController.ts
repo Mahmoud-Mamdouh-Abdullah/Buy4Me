@@ -17,8 +17,5 @@ export const updateCart = async (req: Request, res: Response) => {
     const id = req.params.id;
     const { products_list } = req.body;
     let cart = await cartService.editCart(id, products_list);
-    if (cart.error) {
-        return res.send(cart);
-    }
-    res.send({ message: `Cart with ID ${id} updated successfully` });
+    res.send(cart);
 }

@@ -64,8 +64,9 @@ var ProductsRepository = /** @class */ (function () {
             });
         });
     };
-    ProductsRepository.prototype.selectOne = function (filter) {
+    ProductsRepository.prototype.selectOne = function (filter, fields) {
         if (filter === void 0) { filter = {}; }
+        if (fields === void 0) { fields = ''; }
         return __awaiter(this, void 0, void 0, function () {
             var e_2;
             return __generator(this, function (_a) {
@@ -75,7 +76,7 @@ var ProductsRepository = /** @class */ (function () {
                         return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, Product_Model_1.Product.findOne(filter)];
+                        return [4 /*yield*/, Product_Model_1.Product.findOne(filter).select(fields)];
                     case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         e_2 = _a.sent();

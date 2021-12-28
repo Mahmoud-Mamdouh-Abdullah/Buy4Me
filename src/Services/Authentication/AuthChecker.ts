@@ -2,6 +2,7 @@ import { Encryptor } from "../Encryptor";
 import { TokenService } from "./TokenServiec";
 import { Token } from "../../Data/Models/Token.Model";
 import { UsersRepository } from "../../Data/Repositories/UsersRepository";
+import { CartService } from "../CartService";
 
 const userRepo = new UsersRepository();
 const tokenService = new TokenService();
@@ -35,13 +36,17 @@ export class AuthChecker {
         if (userToken) {
             await tokenService.delete(userToken._id.toString());
         }
+
         let tokenObject = new Token({
             token: token,
             user_id: this.user._id,
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString()
         });
+
         tokenService.create(tokenObject);
+
+
         return {
             user: this.user,
             token

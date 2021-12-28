@@ -87,8 +87,9 @@ var UsersRepository = /** @class */ (function () {
             });
         });
     };
-    UsersRepository.prototype.selectOne = function (filter) {
+    UsersRepository.prototype.selectOne = function (filter, fields) {
         if (filter === void 0) { filter = {}; }
+        if (fields === void 0) { fields = ''; }
         return __awaiter(this, void 0, void 0, function () {
             var e_3;
             return __generator(this, function (_a) {
@@ -98,7 +99,7 @@ var UsersRepository = /** @class */ (function () {
                         return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, User_Model_1.User.findOne(filter)];
+                        return [4 /*yield*/, User_Model_1.User.findOne(filter).select(fields)];
                     case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         e_3 = _a.sent();

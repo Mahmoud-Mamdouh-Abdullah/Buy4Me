@@ -1,8 +1,15 @@
 import express, { IRouter } from "express";
 import { MulterMiddleware } from "../Middlewares/MulterMiddleware";
 import { RouterInterface } from "../Core/Interfaces/Router.Interface";
-import { all, createProduct, deleteProduct, getByQuery, updateProduct, getProductsByCategory } from "../Controllers/ProductsController";
-import { AuthMiddleware } from "../Middlewares/AuthenticationMiddleware";
+import {
+    all,
+    createProduct,
+    deleteProduct,
+    getByQuery,
+    updateProduct,
+    getProductsByCategory,
+    getProductById
+} from "../Controllers/ProductsController";
 
 
 
@@ -17,6 +24,7 @@ export class ProductRouter implements RouterInterface {
         router.use(upload.array('images', 4));
 
         router.get('/', all);
+        router.get('/id/:id', getProductById)
         router.get('/search/:query', getByQuery);
         router.get('/category/:category', getProductsByCategory);
         router.post('/', createProduct);

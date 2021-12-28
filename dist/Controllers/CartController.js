@@ -67,10 +67,7 @@ var updateCart = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 return [4 /*yield*/, cartService.editCart(id, products_list)];
             case 1:
                 cart = _a.sent();
-                if (cart.error) {
-                    return [2 /*return*/, res.send(cart)];
-                }
-                res.send({ message: "Cart with ID " + id + " updated successfully" });
+                res.send(cart);
                 return [2 /*return*/];
         }
     });

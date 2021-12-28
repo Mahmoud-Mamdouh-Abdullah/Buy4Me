@@ -40,26 +40,24 @@ exports.login = void 0;
 var AuthService_1 = require("../Services/Authentication/AuthService");
 var authService = new AuthService_1.AuthService();
 var login = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, email, password, checker, _b, _c;
-    var _d;
-    return __generator(this, function (_e) {
-        switch (_e.label) {
+    var _a, email, password, checker, data;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
                 _a = req.body, email = _a.email, password = _a.password;
                 if (!email || !password) {
-                    return [2 /*return*/, res.status(404).send({ message: "invalid or missing data" })];
+                    return [2 /*return*/, res.send({ message: "invalid or missing data" })];
                 }
                 checker = authService.login(email, password);
                 return [4 /*yield*/, checker.checkLogin()];
             case 1:
-                if (!(_e.sent())) {
-                    return [2 /*return*/, res.status(404).send({ message: "email or password is incorrect" })];
+                if (!(_b.sent())) {
+                    return [2 /*return*/, res.send({ message: "email or password is incorrect" })];
                 }
-                _c = (_b = res).json;
-                _d = {};
                 return [4 /*yield*/, checker.saveTokenAndGet()];
             case 2:
-                _c.apply(_b, [(_d.data = (_e.sent()), _d)]);
+                data = (_b.sent());
+                res.json({ data: data });
                 return [2 /*return*/];
         }
     });
