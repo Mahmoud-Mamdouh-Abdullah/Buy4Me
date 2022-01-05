@@ -47,7 +47,7 @@ var createOrder = function (req, res) { return __awaiter(void 0, void 0, void 0,
             case 0:
                 _a = req.body, products_list = _a.products_list, location = _a.location, amount = _a.amount, user_id = _a.user_id;
                 if (!products_list || !location || !amount || !user_id || products_list.length === 0) {
-                    return [2 /*return*/, res.status(406).send({ error: 'Invalid or missing data' })];
+                    return [2 /*return*/, res.send({ error: 'Invalid or missing data' })];
                 }
                 orderObject = new Order_Model_1.Order({
                     products_list: products_list,

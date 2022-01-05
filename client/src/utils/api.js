@@ -104,3 +104,20 @@ export const updateCart = async (userId, products, token) => {
         return e.message;
     }
 }
+
+export const makeOrder = async (token, requestBody) => {
+    try {
+        const res = await fetch(BASE_URL + 'orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                token
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        return await res.json();
+    } catch (e) {
+        return e.message;
+    }
+}

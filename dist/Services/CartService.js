@@ -50,13 +50,21 @@ var CartService = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        products_list = {
-                            products_list: body.map(function (productItem) { return ({
-                                _id: productItem._id,
-                                qty: productItem.qty
-                            }); }),
-                            updated_at: new Date().toISOString()
-                        };
+                        if (body === undefined || body.length === 0) {
+                            products_list = {
+                                products_list: [],
+                                updated_at: new Date().toISOString()
+                            };
+                        }
+                        else {
+                            products_list = {
+                                products_list: body.map(function (productItem) { return ({
+                                    _id: productItem._id,
+                                    qty: productItem.qty
+                                }); }),
+                                updated_at: new Date().toISOString()
+                            };
+                        }
                         return [4 /*yield*/, cartRepository.update(id, products_list)];
                     case 1:
                         _a.sent();

@@ -6,8 +6,6 @@ import {
     FaRegClock,
     FaLocationArrow,
     FaPhoneAlt,
-    FaSignInAlt,
-    FaRegistered
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -15,17 +13,18 @@ const Footer = () => {
     return (
         <footer className="footer-sec" id="footer">
             <div className="footer">
+
                 <div className="div-one">
                     <span className="app-name">BUY4ME</span>
                     <div className="social-icons">
                         <a href="https://www.facebook.com/profile.php?id=100006532898046" target="_blank" rel="noreferrer">
-                            <FaFacebook size={24} color="#FFFFFF" />
+                            <FaFacebook size={20} color="#FFFFFF" />
                         </a>
                         <a href="https://www.linkedin.com/in/mahmoud-mamdouh-88b72a195/" target="_blank" rel="noreferrer">
-                            <FaLinkedin size={24} color="#FFFFFF" />
+                            <FaLinkedin size={20} color="#FFFFFF" />
                         </a>
                         <a href="https://github.com/Mahmoud-Mamdouh-Abdullah" target="_blank" rel="noreferrer">
-                            <FaGithub size={24} color="#FFFFFF" />
+                            <FaGithub size={20} color="#FFFFFF" />
                         </a>
                     </div>
                     <p className="about-msg text-start"> Lorem ipsum dolor sit amet,
@@ -37,53 +36,71 @@ const Footer = () => {
                 </div>
 
                 <div className="div-two">
-                    <div className="info">
-                        <FaLocationArrow size={24} color="#FFFFFF" />
-                        <span>Egypt, Cairo, Shoubra El-Khiema Awal, Damanhur Shubra</span>
-                    </div>
+                    <span className="app-name">Contacts</span>
+                    <div className='d-flex flex-column gap-3'>
+                        <div className="info">
+                            <FaLocationArrow size={24} color="#FFFFFF" />
+                            <span>Egypt, Cairo, Shoubra El-Khiema Awal, Damanhur Shubra</span>
+                        </div>
 
-                    <div className="info">
-                        <FaRegClock size={24} color="#FFFFFF" />
-                        <span>Business Hours: From 10:00 To 18:00</span>
-                    </div>
+                        <div className="info">
+                            <FaRegClock size={24} color="#FFFFFF" />
+                            <span>Business Hours: From 10:00 To 18:00</span>
+                        </div>
 
-                    <div className="info">
-                        <FaPhoneAlt size={24} color="#FFFFFF" />
-                        <span>+201091122383 / +201559006754</span>
+                        <div className="info">
+                            <FaPhoneAlt size={24} color="#FFFFFF" />
+                            <span>+201091122383 / +201559006754</span>
+                        </div>
                     </div>
                 </div>
 
                 <div className="div-three">
-                    <span className="app-name">Important Links</span>
+                    <span className="app-name">Let Us Help You</span>
 
                     <div className="link-item">
                         <Link to="/login">
                             <div className="link">
-                                <FaSignInAlt size={16} color="#FFFFFF" />
-                                <span>Login and Create Your First Order</span>
+                                <span>Help</span>
                                 <hr />
                             </div>
                         </Link>
-                        <div className="line-break"></div>
                     </div>
 
                     <div className="link-item">
                         <Link to="/register">
                             <div className="link">
-                                <FaRegistered size={16} color="#FFFFFF" />
-                                <span>Create Your Account Now</span>
+                                <span>Shipping & Delivery</span>
                                 <hr />
                             </div>
                         </Link>
-                        <div className="line-break"></div>
+                    </div>
+
+                    <div className="link-item">
+                        <Link to="/register">
+                            <div className="link">
+                                <span>Returns & Replacements</span>
+                                <hr />
+                            </div>
+                        </Link>
+
+                    </div>
+
+                    <div className="link-item">
+                        <Link to="/register">
+                            <div className="link">
+                                <span>Buy4Me App Download</span>
+                            </div>
+                        </Link>
                     </div>
 
                 </div>
             </div>
 
-            <div className="line-break"></div>
-
-            <span className="copyright">© 2021 Cairo EG, Inc. All Right Reserved</span>
+            <div className='d-flex flex-column justify-content-center'>
+                <div className="line-break"></div>
+                <p className="copyright">&copy; 2021 Cairo EG, Inc. All Right Reserved</p>
+            </div>
 
         </footer>
     )

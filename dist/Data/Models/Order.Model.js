@@ -4,7 +4,8 @@ exports.Order = void 0;
 var mongoose_1 = require("mongoose");
 var OrderSchema = new mongoose_1.Schema({
     products_list: [{
-            _id: mongoose_1.Schema.Types.ObjectId
+            _id: mongoose_1.Schema.Types.ObjectId,
+            qty: Number
         }],
     user_id: mongoose_1.Schema.Types.ObjectId,
     location: String,

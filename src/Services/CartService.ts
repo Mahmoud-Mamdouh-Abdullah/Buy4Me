@@ -6,15 +6,24 @@ const productRepository = new ProductsRepository();
 export class CartService {
 
     async editCart(id: string, body: Array<Object>) {
-        let products_list = {
-            products_list: body.map((productItem: any) => (
-                {
-                    _id: productItem._id,
-                    qty: productItem.qty
-                }
-            )),
-            updated_at: new Date().toISOString()
-        };
+        let products_list;
+        if (body === undefined || body.length === 0) {
+            products_list = {
+                products_list: [],
+                updated_at: new Date().toISOString()
+            };
+        } else {
+
+            products_list = {
+                products_list: body.map((productItem: any) => (
+                    {
+                        _id: productItem._id,
+                        qty: productItem.qty
+                    }
+                )),
+                updated_at: new Date().toISOString()
+            };
+        }
         await cartRepository.update(id, products_list);
         let cart = await this.getCartById(id);
         if (cart === null) {

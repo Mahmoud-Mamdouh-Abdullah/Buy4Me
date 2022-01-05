@@ -80,7 +80,7 @@ const CartItem = (props) => {
                     <div className="product-cost">
                         <div className="product-const-container">
                             <div className="cost-dollar-badge">$</div>
-                            <span>{productData.price.toFixed(2)}</span>
+                            <span>{productData.price}</span>
                         </div>
                     </div>
                 </div>

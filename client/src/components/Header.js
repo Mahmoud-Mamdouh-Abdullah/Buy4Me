@@ -32,18 +32,18 @@ const Header = (props) => {
                         <Link to="/" className="nav-link text-white">Home</Link>
                     </li>
                     <li className="nav-item hide-sm">
-                        <Link to="#Categories" className="nav-link text-white">Categories</Link>
+                        <a href="#Categories" className="nav-link text-white">Categories</a>
                     </li>
                     <li className="nav-item hide-sm">
-                        <Link to="/#contact-us" className="nav-link text-white">Contact us</Link>
+                        <a href="/#contact-us" className="nav-link text-white">Contact us</a>
                     </li>
                     <li className="nav-item hide-sm">
-                        <Link to="/#footer" className="nav-link text-white">About</Link>
+                        <a href="/#footer" className="nav-link text-white">About</a>
                     </li>
 
                     {authedUser !== null && (
                         <li className="nav-item cart-container">
-                            <span class="notify-badge">{cart.itemsCount}</span>
+                            <span class="notify-badge">{cart.itemsCount | 0}</span>
                             <Link to="/cart" className="nav-link text-white">
                                 <FiShoppingCart size={24} />
                             </Link>

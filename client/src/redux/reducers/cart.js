@@ -1,4 +1,4 @@
-import { GET_CART, UPDATE_CART } from "../actions/cart";
+import { GET_CART, RESET_CART, UPDATE_CART } from "../actions/cart";
 
 
 
@@ -10,6 +10,10 @@ export const cart = (cart = {}, action) => {
 
         case GET_CART: {
             return action.payload;
+        }
+
+        case RESET_CART: {
+            return {};
         }
 
         default:

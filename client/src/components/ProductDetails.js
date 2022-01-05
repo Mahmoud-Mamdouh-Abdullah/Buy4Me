@@ -107,8 +107,8 @@ const ProductDetails = (props) => {
                         </div>
                         <span className="details-product-desc">{
                             (product.description.length > 500) ? (
-                                <span>{product.description.substring(0,500).concat('... ')}
-                                <button className="btn-none text-primary">see more</button></span>
+                                <span>{product.description.substring(0, 500).concat('... ')}
+                                    <button className="btn-none text-primary">see more</button></span>
                             ) : product.description
                         }</span>
 

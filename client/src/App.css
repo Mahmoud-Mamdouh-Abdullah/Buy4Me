@@ -587,10 +587,11 @@ textarea:hover, textarea:focus {
 }
 
 .copyright {
-    margin-top: 10px;
+    margin-top: 15px;
     font-family: var(--main-font);
     color: white;
     font-size: 14px;
+    text-align: center;
 }
 
 .footer {
@@ -604,23 +605,30 @@ textarea:hover, textarea:focus {
     row-gap: 20px;
 }
 
-.div-one, .div-two {
-    min-width: 250px;
+.div-one {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    row-gap: 20px;
-    justify-content: space-around;
+    row-gap: 10px;
+    justify-content: flex-start;
+}
+
+.div-two {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 10px;
+    justify-content: flex-start;
 }
 
 .div-three {
-    min-width: 250px;
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    row-gap: 20px;
+    row-gap: 5px;
     justify-content: flex-start;
 }
 
@@ -637,14 +645,14 @@ textarea:hover, textarea:focus {
 
 .app-name {
     color: white;
-    font-family: 'Salsa', cursive;
-    font-size: 28px;
+    font-family: var(--main-font);
+    font-size: 20px;
 }
 
 .about-msg {
     font-family: var(--main-font);
     color: white;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .social-icons {
@@ -676,15 +684,15 @@ textarea:hover, textarea:focus {
 .link:hover {
     animation-name: link;
     animation-duration: var(--main-trans);
-    transform: translateX(10px);
+    text-decoration: underline;
 }
 
 @keyframes link {
     0% {
-        transform: translateX(0px);
+        text-decoration: none;
     }
     100% {
-        transform: translateX(10px);
+        text-decoration: underline;
     }
 }
 
@@ -695,7 +703,7 @@ textarea:hover, textarea:focus {
 }
 
 .link, .info > span {
-    font-size: 14px;
+    font-size: 13px;
     font-family: var(--main-font);
     color: white;
     text-align: start;
@@ -705,6 +713,10 @@ textarea:hover, textarea:focus {
 
 
 /*Start Cart*/
+
+.modal {
+    font-family: var(--main-font);
+}
 .cart-section {
     width: 100vw;
     padding-left: 100px;
@@ -1247,7 +1259,6 @@ textarea:hover, textarea:focus {
     flex: 3;
     display: flex;
     flex-direction: row;
-    border-right: 1px solid var(--input-background);
     flex-wrap: wrap;
 }
 
@@ -1324,7 +1335,7 @@ textarea:hover, textarea:focus {
 .details-title-brand {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: flex-start;
     flex: 1;
 }

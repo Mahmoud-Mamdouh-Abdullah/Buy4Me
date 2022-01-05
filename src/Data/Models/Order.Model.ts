@@ -2,7 +2,8 @@ import { Schema, model, mongo } from 'mongoose';
 
 const OrderSchema = new Schema({
     products_list: [{
-        _id: Schema.Types.ObjectId
+        _id: Schema.Types.ObjectId,
+        qty: Number
     }],
     user_id: Schema.Types.ObjectId,
     location: String,

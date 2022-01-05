@@ -9,7 +9,7 @@ export const createOrder = async (req: Request, res: Response) => {
     const { products_list, location, amount, user_id } = req.body;
 
     if (!products_list || !location || !amount || !user_id || products_list.length === 0) {
-        return res.status(406).send({ error: 'Invalid or missing data' });
+        return res.send({ error: 'Invalid or missing data' });
     }
 
     const orderObject = new Order({
