@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaFacebookF, FaRegHeart, FaTwitter } from "react-icons/fa";
 import { BsCart2 } from 'react-icons/bs';
-import { BsTruck } from 'react-icons/bs';
-import { GiCardPickup } from 'react-icons/gi';
-import { RiArrowGoBackLine } from 'react-icons/ri';
 import { MdRemoveShoppingCart } from 'react-icons/md';
 import { Link, useLocation } from "react-router-dom";
 import { BASE_URL } from "../utils/api";
@@ -50,6 +47,13 @@ const ProductDetails = (props) => {
         dispatch(handleUpdateCartAction(id, { products_list: newCart }, token));
     }
 
+    const formatTitle = (title) => {
+        if (title.length > 50) {
+            title = title.substring(0, 50).concat('...');
+        }
+        return title;
+    }
+
     return (
         <div className="product-details-container">
             <ul className="">
@@ -62,7 +66,7 @@ const ProductDetails = (props) => {
                 </li>
                 <li>/</li>
                 <li>
-                    <span className="text-secondary">{product.title}</span>
+                    <span className="text-secondary">{formatTitle(product.title)}</span>
                 </li>
             </ul>
 
@@ -72,7 +76,7 @@ const ProductDetails = (props) => {
 
                     <div className="details-image-share">
 
-                        <img className="img-shadow" src={BASE_URL + product.images[0].url} alt="product-img" width={260} height={250} />
+                        <img className="fit-image" src={BASE_URL + product.images[0].url} alt="product-img" width={350} height={350} />
 
                         <div className="share-icons-container">
                             <span>SHARE THIS PRODUCT</span>
@@ -91,17 +95,22 @@ const ProductDetails = (props) => {
 
                     <div className={"rest-details " + (authedUser === null ? "justify-content-start gap-5" : 'justify-content-between')}>
                         <div className="details-title-love">
-                            <div className="d-flex flex-column justify-content-center align-items-start">
+                            <div className="details-title-brand">
                                 <span className="datails-product-title">{product.title}</span>
                                 <span className="details-brand-name">{product.brandName}</span>
                             </div>
-                            <FaRegHeart size={24} className="mt-1" />
+                            <FaRegHeart size="25px" className="mt-1" />
                         </div>
                         <div className="details-price">
                             <span className="details-price-amount">$ {(product.price).toFixed(2)}</span>
                             <span className="details-price-discount">$ 350.00</span>
                         </div>
-                        <span className="details-product-desc">{product.description}</span>
+                        <span className="details-product-desc">{
+                            (product.description.length > 500) ? (
+                                <span>{product.description.substring(0,500).concat('... ')}
+                                <button className="btn-none text-primary">see more</button></span>
+                            ) : product.description
+                        }</span>
 
                         {(!inCart && authedUser !== null) && (
                             <button
@@ -124,35 +133,6 @@ const ProductDetails = (props) => {
 
                 </div>
 
-                <div className="details-left-div">
-
-                    <div className="details-info-container">
-                        <BsTruck className="mt-2" size={24} />
-                        <div className="details-info">
-                            <span className="info-title">Door Delivery</span>
-                            <span className="info-details">Shipping EGP 52
-                                Ready for delivery between 14 December & 15 December when you order within next 18hrs 6mins</span>
-                        </div>
-                    </div>
-
-                    <div className="details-info-container">
-                        <GiCardPickup className="mt-2" size={24} />
-                        <div className="details-info">
-                            <span className="info-title">Pickup Station</span>
-                            <span className="info-details">Shipping EGP 11
-                                Ready for pickup between 13 December & 22 December when you order within next 14hrs 20mins</span>
-                        </div>
-                    </div>
-
-                    <div className="details-info-container">
-                        <RiArrowGoBackLine className="mt-2" size={24} />
-                        <div className="details-info">
-                            <span className="info-title">Return Policy</span>
-                            <span className="info-details">14 days free return (except for underwear and personal items) up to 30 days for defective products with necessity for requesting a return within 24 hours from the delivery date.</span>
-                        </div>
-                    </div>
-
-                </div>
             </div>
 
         </div>

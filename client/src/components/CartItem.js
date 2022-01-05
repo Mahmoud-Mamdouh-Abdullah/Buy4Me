@@ -52,7 +52,7 @@ const CartItem = (props) => {
 
     return (
         <div className="cart-item">
-            <img src={(productData.images !== undefined) && BASE_URL + productData.images[0].url} alt="product img" width="150" height="150" style={{ boxShadow: "0px 2px 5px #000" }} />
+            <img className="fit-image" src={(productData.images !== undefined) && BASE_URL + productData.images[0].url} alt="product img" width="150" height="150" />
             <div className="parent-up-bottom-cart">
                 <div className="up-cart-div">
                     <div className="name-brand-cart">
@@ -80,7 +80,7 @@ const CartItem = (props) => {
                     <div className="product-cost">
                         <div className="product-const-container">
                             <div className="cost-dollar-badge">$</div>
-                            <span>{productData.price}</span>
+                            <span>{productData.price.toFixed(2)}</span>
                         </div>
                     </div>
                 </div>

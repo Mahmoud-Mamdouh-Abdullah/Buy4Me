@@ -152,6 +152,7 @@ ul {
 
 .header-container {
     width: 100vw;
+    height: 60px;
     padding: 5px 20px 5px 20px;
     background-color: var(--main-color);
     display: flex;
@@ -263,17 +264,19 @@ li {
 
 .banner {
     width: 100vw;
-    background-image: url('./assets/images/standsome-worklifestyle-zY1ZWW1_CqE-unsplash.jpg');
+    height: 92vh;
+    background-image: url('./assets/images/tips-impulsar-ecommerce-1.jpg');
     background-repeat: no-repeat;
     background-position: center;
-    height: 92vh;
+    background-size: cover;
+    height: calc(100vh - 60px);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .shadow {
     width: 100vw;
-    height: 92vh;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1210,7 +1213,7 @@ textarea:hover, textarea:focus {
 }
 
 .img-shadow {
-    box-shadow: 0px 2px 4px var(--main-color);
+    border: 1px solid var(--fourth-color);
 }
 
 .product-details-container ul {
@@ -1260,7 +1263,9 @@ textarea:hover, textarea:focus {
     display: flex;
     flex-direction: column;
     row-gap: 20px;
-    flex: 3;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .share-icons-container {
@@ -1302,7 +1307,7 @@ textarea:hover, textarea:focus {
 }
 
 .rest-details {
-    flex: 7;
+    flex: 2;
     padding: 0 20px 0 20px;
     display: flex;
     flex-direction: column;
@@ -1310,14 +1315,23 @@ textarea:hover, textarea:focus {
 
 .details-title-love {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     border-bottom: 1px solid var(--line-braek);
     padding-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.details-title-brand {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: flex-start;
+    flex: 1;
 }
 
 .datails-product-title {
     font-family: var(--main-font);
-    font-size: 20px;
+    font-size: 18px;
     text-align: start;
 }
 
@@ -1375,9 +1389,9 @@ textarea:hover, textarea:focus {
 .details-left-div {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex: 1;
-    row-gap: 5px;
+    row-gap: 30px;
 }
 
 .details-info-container {
@@ -1405,4 +1419,8 @@ textarea:hover, textarea:focus {
     font-family: var(--main-font);
 }
 
+
+.fit-image {
+    object-fit: scale-down;
+}
 /* End Product Details Page */

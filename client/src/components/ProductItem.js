@@ -25,7 +25,7 @@ const ProductItem = (props) => {
             <button
                 onClick={handleDetailsClick}
                 className="btn-none">
-                <img src={BASE_URL + product.images[0].url} alt="productImage" width="200px" height="200px" />
+                <img className="fit-image" src={BASE_URL + product.images[0].url} alt="productImage" width="200px" height="200px" />
             </button>
             <button
                 onClick={handleDetailsClick}
