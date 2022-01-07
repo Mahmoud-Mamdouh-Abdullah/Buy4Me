@@ -30,6 +30,10 @@ body {
     --main-font: 'Cairo', cursive;
 }
 
+.app-font {
+    font-family: var(--main-font);
+}
+
 .btn-none {
     background: none;
 	color: inherit;
@@ -1435,3 +1439,85 @@ textarea:hover, textarea:focus {
     object-fit: scale-down;
 }
 /* End Product Details Page */
+
+
+/*Start Orders List*/
+
+.orders-section {
+    width: 90vw;
+    min-height: calc(100vh - 110px);
+    margin: 50px 100px 0px 100px;
+}
+
+.orders-title-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+    margin-bottom: 20px;
+}
+
+.orders-title {
+    font-family: var(--main-font);
+    font-size: 28px;
+}
+
+.orders-count {
+    font-family: var(--main-font);
+    font-size: 16px;
+    color: var(--fourth-color);
+}
+
+
+.order-item {
+    margin-top: 10px;
+    padding: 10px 20px 10px 20px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line-braek);
+    border-radius: 5px;
+    flex-wrap: wrap;
+}
+
+.order-item:hover {
+    background-color: #f7f7f7;
+}
+
+.order-item-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line-braek);
+    padding-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.order-id-div, .order-date-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    font-family: var(--main-font);
+}
+
+.order-detail-title {
+    font-weight: bold;
+}
+
+
+.order-item-bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-family: var(--main-font);
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.order-bottom-status {
+    padding-right: 12px;
+}
+
+/*End Orders List*/
+

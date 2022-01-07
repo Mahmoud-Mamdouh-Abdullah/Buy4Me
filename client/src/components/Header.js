@@ -60,12 +60,31 @@ const Header = (props) => {
                             </div>
                         </li>
                     ) : (
-                        <li className="nav-item cart-container">
-                            <Link to="/" className='text-white ms-4 d-flex justify-content-center align-items-center gap-3'>
-                                <BsPersonCircle size={30} />
-                                <span className='header-profile-name'>{authedUser.data.user.name}</span>
-                                <MdLogout onClick={handleLogoutClick} size={30} />
-                            </Link>
+                        <li className="nav-item d-flex flex-row justify-content-center align-items-center gap-3">
+                            <div class="dropdown">
+                                <button
+                                    id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    className='btn-none text-white ms-4 d-flex justify-content-center align-items-center gap-3'>
+                                    <BsPersonCircle size={30} />
+                                    <span className='header-profile-name'>{authedUser.data.user.name}</span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li>
+                                        <Link className='dropdown-item app-font' to="/orders">Orders</Link>
+                                    </li>
+                                    <li>
+                                        <Link to='/' class="dropdown-item app-font">Favourite List</Link>
+                                    </li>
+                                    <li>
+                                        <Link to='/' class="dropdown-item app-font">My Profile</Link>
+                                    </li>
+                                </ul>
+                            </div>
+                            <button onClick={handleLogoutClick} className='btn-none'>
+                                <MdLogout size={30} />
+                            </button>
                         </li>
                     )}
                 </ul>
