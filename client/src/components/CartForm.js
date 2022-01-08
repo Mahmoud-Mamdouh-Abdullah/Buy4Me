@@ -12,7 +12,6 @@ const CartForm = (props) => {
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
 
-
     const handleProceedCheckout = () => {
         let token = authedUser.data.token;
         let id = authedUser.data.user._id;
@@ -50,7 +49,7 @@ const CartForm = (props) => {
                     <div className="items-count">total</div>
                     <div className="totalcost-container">
                         <div className="dollar-badge">$</div>
-                        <span>{cart.total | 0}</span>
+                        <span>{cart.total.toFixed(2)}</span>
                     </div>
                 </div>
             </div>
@@ -69,7 +68,7 @@ const CartForm = (props) => {
                     <span>Continue shopping</span>
                 </Link>
 
-                <button data-bs-toggle="modal" data-bs-target="#exampleModal">Proceed to checkout</button>
+                <button className="proceed" data-bs-toggle="modal" data-bs-target="#exampleModal">Proceed to checkout</button>
             </div>
 
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

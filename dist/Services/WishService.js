@@ -44,7 +44,7 @@ var WishService = /** @class */ (function () {
     }
     WishService.prototype.editWishList = function (id, body) {
         return __awaiter(this, void 0, void 0, function () {
-            var products_list, cart;
+            var products_list, wishlist;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -54,13 +54,14 @@ var WishService = /** @class */ (function () {
                         };
                         return [4 /*yield*/, wishRepository.update(id, products_list)];
                     case 1:
-                        cart = _a.sent();
-                        if (cart === null) {
+                        _a.sent();
+                        wishlist = this.getWishListById(id);
+                        if (wishlist === null) {
                             return [2 /*return*/, {
                                     error: 'Invalid or missing ID'
                                 }];
                         }
-                        return [2 /*return*/, cart];
+                        return [2 /*return*/, wishlist];
                 }
             });
         });

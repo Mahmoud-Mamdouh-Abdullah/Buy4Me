@@ -105,6 +105,41 @@ export const updateCart = async (userId, products, token) => {
     }
 }
 
+
+export const updateWishList = async (userId, products, token) => {
+    console.log(products);
+    try {
+        const res = await fetch(BASE_URL + `wishlist/id/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                token
+            },
+            body: JSON.stringify(products)
+        });
+
+        return await res.json();
+    } catch (e) {
+        return e.message;
+    }
+}
+
+export const getWishList = async (userId, token) => {
+    try {
+        const res = await fetch(BASE_URL + `wishlist/id/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                token
+            },
+        });
+
+        return await res.json();
+    } catch (e) {
+        return e.message;
+    }
+}
+
 export const makeOrder = async (token, requestBody) => {
     try {
         const res = await fetch(BASE_URL + 'orders', {
@@ -121,3 +156,18 @@ export const makeOrder = async (token, requestBody) => {
         return e.message;
     }
 }
+
+export const getUserOrders = async (token, userId) => {
+    try {
+        const res = await fetch(BASE_URL + `orders/user/id/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                token
+            }
+        });
+        return (await res.json());
+    } catch (e) {
+        return e.message;
+    }
+} 

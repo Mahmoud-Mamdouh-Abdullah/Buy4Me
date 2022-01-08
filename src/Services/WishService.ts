@@ -11,13 +11,14 @@ export class WishService {
             )),
             updated_at:new Date().toISOString()
         };
-        let cart = await wishRepository.update(id, products_list);
-        if (cart === null) {
+        await wishRepository.update(id, products_list);
+        let wishlist = this.getWishListById(id);
+        if (wishlist === null) {
             return {
                 error: 'Invalid or missing ID'
             }
         }
-        return cart;
+        return wishlist;
     }
 
     async getWishListById(_id: string) {

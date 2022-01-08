@@ -76,7 +76,10 @@ var OrdersService = /** @class */ (function () {
                     case 0: return [4 /*yield*/, orderRepository.selectAll({ user_id: user_id })];
                     case 1:
                         orders = _a.sent();
-                        return [2 /*return*/, orders];
+                        return [2 /*return*/, {
+                                count: orders.length,
+                                orders: orders
+                            }];
                 }
             });
         });

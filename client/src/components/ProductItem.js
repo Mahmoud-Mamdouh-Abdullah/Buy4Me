@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
+import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { handleUpdateWishListAction } from "../redux/actions/wishlist";
 import { BASE_URL } from "../utils/api";
 
 
@@ -8,11 +10,37 @@ const ProductItem = (props) => {
 
     const [isLiked, setLiked] = useState(0);
     const navigate = useNavigate();
-    const { product, category } = props;
+    const { product, category, authedUser, wishlist, dispatch } = props;
 
+
+    useEffect(() => {
+        if (authedUser !== null) {
+            let check = false;
+            wishlist.products_list.forEach(element => {
+                if (element._id === product._id) {
+                    setLiked(1);
+                    check = true;
+                }
+            });
+            if (!check) {
+                setLiked(0);
+            }
+        }
+    }, [authedUser, product._id, wishlist]);
 
     const handleLoveClick = (e) => {
-        isLiked ? setLiked(0) : setLiked(1);
+        let token = authedUser.data.token;
+        let id = authedUser.data.user._id;
+        console.log(token);
+        if (isLiked) {
+            let newWishList = wishlist.products_list.filter(item => (
+                (item._id !== product._id)
+            ));
+            dispatch(handleUpdateWishListAction(id, { products_list: newWishList }, token));
+        } else {
+            let newWishList = [...wishlist.products_list, { _id: product._id }];
+            dispatch(handleUpdateWishListAction(id, { products_list: newWishList }, token));
+        }
     }
 
     const handleDetailsClick = () => {
@@ -54,4 +82,11 @@ const ProductItem = (props) => {
     )
 }
 
-export default ProductItem;
+const mapStateToProps = ({ authedUser, wishlist }) => {
+    return {
+        authedUser,
+        wishlist,
+    }
+}
+
+export default connect(mapStateToProps)(ProductItem);

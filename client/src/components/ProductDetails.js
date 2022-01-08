@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { FaFacebookF, FaRegHeart, FaTwitter } from "react-icons/fa";
-import { BsCart2 } from 'react-icons/bs';
+import { FaFacebookF, FaTwitter } from "react-icons/fa";
+import { BsCart2, BsHeart, BsHeartFill } from 'react-icons/bs';
 import { MdRemoveShoppingCart } from 'react-icons/md';
 import { Link, useLocation } from "react-router-dom";
 import { BASE_URL } from "../utils/api";
@@ -11,24 +11,35 @@ import { handleUpdateCartAction } from '../redux/actions/cart';
 
 const ProductDetails = (props) => {
 
-    const { authedUser, cart, dispatch } = props;
+    const [isLiked, setLiked] = useState(false);
+    const { authedUser, cart, wishlist, dispatch } = props;
     const [inCart, setInCart] = useState(false);
     const { product, path } = useLocation().state;
 
     useEffect(() => {
         if (authedUser !== null) {
-            let check = false;
+            let cartCheck = false;
             cart.productList.forEach(element => {
                 if (element._id === product._id) {
                     setInCart(true);
-                    check = true;
+                    cartCheck = true;
                 }
             });
-            if (!check) {
+            if (!cartCheck) {
                 setInCart(false);
             }
+            let wishCheck = false;
+            wishlist.products_list.forEach(element => {
+                if (element._id === product._id) {
+                    setLiked(1);
+                    wishCheck = true;
+                }
+            });
+            if (!wishCheck) {
+                setLiked(0);
+            }
         }
-    }, [authedUser, cart.productList, product._id]);
+    }, [authedUser, cart.productList, product._id, wishlist.products_list]);
 
 
     const handleAddToCart = () => {
@@ -99,7 +110,10 @@ const ProductDetails = (props) => {
                                 <span className="datails-product-title">{product.title}</span>
                                 <span className="details-brand-name">{product.brandName}</span>
                             </div>
-                            <FaRegHeart size="25px" className="mt-1" />
+                            <button className="btn-none">
+                                {isLiked ? <BsHeartFill size={25} color="red" />
+                                    : <BsHeart size={25} />}
+                            </button>
                         </div>
                         <div className="details-price">
                             <span className="details-price-amount">$ {(product.price).toFixed(2)}</span>
@@ -139,10 +153,11 @@ const ProductDetails = (props) => {
     )
 }
 
-const mapStateToProps = ({ authedUser, cart }) => {
+const mapStateToProps = ({ authedUser, cart, wishlist }) => {
     return {
         authedUser,
-        cart
+        cart,
+        wishlist
     }
 }
 

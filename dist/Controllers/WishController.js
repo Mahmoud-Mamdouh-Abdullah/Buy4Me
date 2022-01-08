@@ -58,7 +58,7 @@ var getWishList = function (req, res) { return __awaiter(void 0, void 0, void 0,
 }); };
 exports.getWishList = getWishList;
 var updateWishList = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, products_list, cart;
+    var id, products_list, wishlist;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -66,11 +66,11 @@ var updateWishList = function (req, res) { return __awaiter(void 0, void 0, void
                 products_list = req.body.products_list;
                 return [4 /*yield*/, wishService.editWishList(id, products_list)];
             case 1:
-                cart = _a.sent();
-                if (cart.error) {
-                    return [2 /*return*/, res.send(cart)];
+                wishlist = _a.sent();
+                if (wishlist.error) {
+                    return [2 /*return*/, res.send(wishlist)];
                 }
-                res.send({ message: "WishList with ID " + id + " updated successfully" });
+                res.send(wishlist);
                 return [2 /*return*/];
         }
     });

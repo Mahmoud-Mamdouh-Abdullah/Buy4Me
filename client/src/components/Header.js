@@ -32,7 +32,7 @@ const Header = (props) => {
                         <Link to="/" className="nav-link text-white">Home</Link>
                     </li>
                     <li className="nav-item hide-sm">
-                        <a href="#Categories" className="nav-link text-white">Categories</a>
+                        <a href="/#Categories" className="nav-link text-white">Categories</a>
                     </li>
                     <li className="nav-item hide-sm">
                         <a href="/#contact-us" className="nav-link text-white">Contact us</a>
@@ -75,7 +75,7 @@ const Header = (props) => {
                                         <Link className='dropdown-item app-font' to="/orders">Orders</Link>
                                     </li>
                                     <li>
-                                        <Link to='/' class="dropdown-item app-font">Favourite List</Link>
+                                        <Link to='/wishlist' class="dropdown-item app-font">WishList</Link>
                                     </li>
                                     <li>
                                         <Link to='/' class="dropdown-item app-font">My Profile</Link>

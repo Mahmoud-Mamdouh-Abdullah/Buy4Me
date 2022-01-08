@@ -16,9 +16,9 @@ export const getWishList = async (req: Request, res: Response) => {
 export const updateWishList = async (req: Request, res: Response) => {
     const id = req.params.id;
     const { products_list } = req.body;
-    let cart = await wishService.editWishList(id, products_list);
-    if (cart.error) {
-        return res.send(cart);
+    let wishlist = await wishService.editWishList(id, products_list);
+    if (wishlist.error) {
+        return res.send(wishlist);
     }
-    res.send({ message: `WishList with ID ${id} updated successfully` });
+    res.send(wishlist);
 }

@@ -3,21 +3,27 @@ import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { connect } from "react-redux";
 import { BASE_URL, getProductById } from "../utils/api";
 import { handleUpdateCartAction } from '../redux/actions/cart';
+import { hideLoading, showLoading } from "react-redux-loading";
 
 const CartItem = (props) => {
 
     const productProp = props.product;
     const { authedUser, cart, dispatch } = props;
-    const [productData, setProductData] = useState({});
+    const [productData, setProductData] = useState({
+        description: '',
+        price: 0
+    });
     const [qty, setQty] = useState(1);
 
 
     useEffect(() => {
+        dispatch(showLoading());
         setQty(productProp.qty);
         getProductById(productProp._id).then(product => {
             setProductData(product);
+            dispatch(hideLoading());
         });
-    }, [productProp._id, productProp.qty])
+    }, [dispatch, productProp._id, productProp.qty])
 
     const handleClick = () => {
         const id = authedUser.data.user._id;
@@ -80,13 +86,13 @@ const CartItem = (props) => {
                     <div className="product-cost">
                         <div className="product-const-container">
                             <div className="cost-dollar-badge">$</div>
-                            <span>{productData.price}</span>
+                            <span>{productData.price.toFixed(2)}</span>
                         </div>
                     </div>
                 </div>
 
                 <div className="bottom-cart-div">
-                    <span>{productData.description}</span>
+                    <span>{productData.description.substring(0, 100).concat('...')}</span>
                     <button
                         onClick={handleClick}
                         className="btn-none text-danger">X</button>

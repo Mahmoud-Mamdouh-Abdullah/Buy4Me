@@ -30,8 +30,8 @@ export const handleUpdateCartAction = (userId, products, token) => {
         dispatch(showLoading());
         updateCart(userId, products, token).then(cart => {
             dispatch(updateCartAction(cart));
-        })
-        dispatch(hideLoading());
+            dispatch(hideLoading());
+        });
     }
 }
 

@@ -18,7 +18,10 @@ export class OrdersService {
 
     async getOrdersByUserID(user_id: string) {
         let orders: any = await orderRepository.selectAll({ user_id });
-        return orders;
+        return {
+            count: orders.length,
+            orders
+        };
     }
 
     async getOrderByID(_id: string) {

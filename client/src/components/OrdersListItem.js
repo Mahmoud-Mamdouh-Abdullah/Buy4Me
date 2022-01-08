@@ -1,19 +1,31 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { formatDate } from "../utils/helpers";
 
 const OrdersListItem = (props) => {
+
+    const { order } = props;
+    const navigate = useNavigate();
+
+    console.log(order);
+
+
+    const handleShowOrderDetails = () => {
+        navigate(`/orders/id/${order._id}`, { state: { order } });
+    }
+
     return (
-        <Link to='/' className="order-item text-black">
+        <div className="order-item text-black">
             <div className="order-item-top">
 
                 <div className="order-id-div">
                     <span className="order-detail-title">Order ID</span>
-                    <span>61d602d521b9069c2c47cd94</span>
+                    <span>{order._id}</span>
                 </div>
 
                 <div className="order-date-div">
                     <span className="order-detail-title">Order Date</span>
-                    <span>Mon, 07-02-2022</span>
+                    <span>{formatDate(order.created_at)}</span>
                 </div>
 
             </div>
@@ -21,15 +33,16 @@ const OrdersListItem = (props) => {
             <div className="order-item-bottom">
                 <div>
                     <span className="order-detail-title">Location : </span>
-                    <span>Shubra El-Khiema Awal, Cairo</span>
+                    <span>{order.location}</span>
                 </div>
 
                 <div className="order-bottom-status">
-                    <span className="order-detail-title">Status : </span>
-                    <span>Pending</span>
+                    <button
+                        onClick={handleShowOrderDetails}
+                        className="show-more">Show Details</button>
                 </div>
             </div>
-        </Link>
+        </div>
     )
 }
 

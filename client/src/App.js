@@ -16,6 +16,8 @@ import LoadingBar from 'react-redux-loading';
 import { useEffect, useState } from 'react';
 import ProtectedRoute from './components/ProtectedRoute';
 import OrdersList from './components/OrdersList';
+import OrderDetails from './components/OrderDetails';
+import WishList from './components/WishList';
 
 function App() {
 
@@ -69,6 +71,14 @@ function App() {
 
         <Route path="/orders" element={
           <ProtectedRoute component={OrdersList} />
+        } />
+
+        <Route path="/orders/id/:id" element={
+          <ProtectedRoute component={OrderDetails} />
+        } />
+
+        <Route path='/wishlist' element={
+          <ProtectedRoute component={WishList} />
         } />
 
         <Route path="/*" element={
