@@ -55,12 +55,17 @@ var OrdersService = /** @class */ (function () {
             });
         });
     };
-    OrdersService.prototype.getAll = function () {
+    OrdersService.prototype.getAll = function (page) {
         return __awaiter(this, void 0, void 0, function () {
-            var orders;
+            var options, orders;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, orderRepository.selectAll()];
+                    case 0:
+                        options = {
+                            page: parseInt(page) || 1,
+                            limit: 3
+                        };
+                        return [4 /*yield*/, orderRepository.selectAll({}, options)];
                     case 1:
                         orders = _a.sent();
                         return [2 /*return*/, orders];
@@ -68,12 +73,17 @@ var OrdersService = /** @class */ (function () {
             });
         });
     };
-    OrdersService.prototype.getOrdersByUserID = function (user_id) {
+    OrdersService.prototype.getOrdersByUserID = function (user_id, page) {
         return __awaiter(this, void 0, void 0, function () {
-            var orders;
+            var options, orders;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, orderRepository.selectAll({ user_id: user_id })];
+                    case 0:
+                        options = {
+                            page: parseInt(page) || 1,
+                            limit: 3
+                        };
+                        return [4 /*yield*/, orderRepository.selectAll({ user_id: user_id }, options)];
                     case 1:
                         orders = _a.sent();
                         return [2 /*return*/, {

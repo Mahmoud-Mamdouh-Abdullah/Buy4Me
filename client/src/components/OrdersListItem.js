@@ -7,8 +7,6 @@ const OrdersListItem = (props) => {
     const { order } = props;
     const navigate = useNavigate();
 
-    console.log(order);
-
 
     const handleShowOrderDetails = () => {
         navigate(`/orders/id/${order._id}`, { state: { order } });

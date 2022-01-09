@@ -87,8 +87,9 @@ var OrdersRepository = /** @class */ (function () {
             });
         });
     };
-    OrdersRepository.prototype.selectAll = function (filter) {
+    OrdersRepository.prototype.selectAll = function (filter, options) {
         if (filter === void 0) { filter = {}; }
+        if (options === void 0) { options = {}; }
         return __awaiter(this, void 0, void 0, function () {
             var e_3;
             return __generator(this, function (_a) {
@@ -98,7 +99,7 @@ var OrdersRepository = /** @class */ (function () {
                         return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, Order_Model_1.Order.find(filter)];
+                        return [4 /*yield*/, Order_Model_1.Order.paginate(filter, options)];
                     case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         e_3 = _a.sent();

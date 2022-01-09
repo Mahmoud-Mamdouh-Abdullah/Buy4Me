@@ -11,19 +11,27 @@ export class ProductsService {
         return (await productsRepository.insert(productObject));
     }
 
-    async getAll() {
-        return (await productsRepository.selectAll());
+    async getAll(page: any) {
+        let options = {
+            page: parseInt(page) || 1,
+            limit: 8
+        }
+        return (await productsRepository.selectAll({}, options));
     }
 
-    async getPodcutsByCategory(category: string) {
-        return (await productsRepository.selectAll({ category }));
+    async getPodcutsByCategory(category: string, page: any) {
+        let options = {
+            page: parseInt(page) || 1,
+            limit: 8
+        }
+        return (await productsRepository.selectAll({ category }, options));
     }
 
     async getProductById(_id: string) {
         return (await productsRepository.selectOne({ _id }));
     }
 
-    async searchProducts(query: string) {
+    async searchProducts(query: string, page: any) {
         let filter = {
             $or: [
                 { title: { $regex: query, $options: 'i' } },
@@ -31,7 +39,11 @@ export class ProductsService {
                 { category: { $regex: query, $options: 'i' } },
             ]
         };
-        return (await productsRepository.selectAll(filter));
+        let options = {
+            page: parseInt(page) || 1,
+            limit: 8
+        }
+        return (await productsRepository.selectAll(filter, options));
     }
 
     async deleteProductById(id: string) {

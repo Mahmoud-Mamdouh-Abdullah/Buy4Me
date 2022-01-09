@@ -29,13 +29,15 @@ export const createOrder = async (req: Request, res: Response) => {
 }
 
 export const all = async (req: Request, res: Response) => {
-    let orders = await ordersService.getAll();
+    const page = req.query.page;
+    let orders = await ordersService.getAll(page);
     res.send(orders);
 }
 
 export const getOrdersByUserId = async (req: Request, res: Response) => {
+    const page = req.query.page;
     let userId = req.params.user_id;
-    let orders = await ordersService.getOrdersByUserID(userId);
+    let orders = await ordersService.getOrdersByUserID(userId, page);
     res.send(orders);
 }
 

@@ -25,10 +25,10 @@ export class OrdersRepository {
         }
     }
 
-    async selectAll(filter: Object = {}) {
+    async selectAll(filter: Object = {}, options: Object = {}) {
         try {
             await ConnectToMongo();
-            return (await Order.find(filter));
+            return (await Order.paginate(filter, options));
         } catch (e: any) {
             return {
                 error: e.message

@@ -93,10 +93,12 @@ var createProduct = function (req, res) { return __awaiter(void 0, void 0, void 
 }); };
 exports.createProduct = createProduct;
 var all = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var products;
+    var page, products;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, productsService.getAll()];
+            case 0:
+                page = req.query.page;
+                return [4 /*yield*/, productsService.getAll(page)];
             case 1:
                 products = _a.sent();
                 if (products.error) {
@@ -109,12 +111,13 @@ var all = function (req, res) { return __awaiter(void 0, void 0, void 0, functio
 }); };
 exports.all = all;
 var getByQuery = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var query, products;
+    var query, page, products;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 query = req.params.query;
-                return [4 /*yield*/, productsService.searchProducts(query)];
+                page = req.query.page;
+                return [4 /*yield*/, productsService.searchProducts(query, page)];
             case 1:
                 products = _a.sent();
                 if (products.error) {
@@ -127,17 +130,18 @@ var getByQuery = function (req, res) { return __awaiter(void 0, void 0, void 0, 
 }); };
 exports.getByQuery = getByQuery;
 var getProductsByCategory = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var category, products;
+    var category, page, products;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 category = req.params.category;
+                page = req.query.page;
                 if (!category) {
                     return [2 /*return*/, {
                             error: 'Invalid or missing data !!'
                         }];
                 }
-                return [4 /*yield*/, productsService.getPodcutsByCategory(category)];
+                return [4 /*yield*/, productsService.getPodcutsByCategory(category, page)];
             case 1:
                 products = _a.sent();
                 res.send({ products: products });

@@ -11,13 +11,21 @@ export class OrdersService {
         return order;
     }
 
-    async getAll() {
-        let orders: any = await orderRepository.selectAll();
+    async getAll(page: any) {
+        let options = {
+            page: parseInt(page) || 1,
+            limit: 3
+        }
+        let orders: any = await orderRepository.selectAll({}, options);
         return orders;
     }
 
-    async getOrdersByUserID(user_id: string) {
-        let orders: any = await orderRepository.selectAll({ user_id });
+    async getOrdersByUserID(user_id: string, page: any) {
+        let options = {
+            page: parseInt(page) || 1,
+            limit: 3
+        }
+        let orders: any = await orderRepository.selectAll({ user_id }, options);
         return {
             count: orders.length,
             orders

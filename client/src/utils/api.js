@@ -83,9 +83,9 @@ export const getCategories = async () => {
     }
 }
 
-export const getProductsByCategory = async (category) => {
+export const getProductsByCategory = async (category, page = 1) => {
     try {
-        const res = await fetch(BASE_URL + `products/category/${category}`);
+        const res = await fetch(BASE_URL + `products/category/${category}?page=${page}`);
         const productsDate = await res.json();
         return productsDate;
     } catch (e) {
@@ -189,9 +189,9 @@ export const makeOrder = async (token, requestBody) => {
     }
 }
 
-export const getUserOrders = async (token, userId) => {
+export const getUserOrders = async (token, userId, page = 1) => {
     try {
-        const res = await fetch(BASE_URL + `orders/user/id/${userId}`, {
+        const res = await fetch(BASE_URL + `orders/user/id/${userId}?page=${page}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

@@ -25,10 +25,10 @@ export class ProductsRepository {
         }
     }
 
-    async selectAll(filter: Object = {}): Promise<any> {
+    async selectAll(filter: Object = {}, options: Object = {}): Promise<any> {
         try {
             await ConnectToMongo();
-            return (await Product.find(filter));
+            return (await Product.paginate(filter, options));
         } catch (e: any) {
             return {
                 error: e.message

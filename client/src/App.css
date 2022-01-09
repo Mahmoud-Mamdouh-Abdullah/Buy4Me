@@ -1445,7 +1445,7 @@ textarea:hover, textarea:focus {
 
 .orders-section {
     width: 90vw;
-    min-height: calc(100vh - 110px);
+    min-height: calc(100vh - 60px);
     margin: 50px 100px 0px 100px;
 }
 

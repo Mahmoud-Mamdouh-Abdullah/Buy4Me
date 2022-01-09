@@ -45,7 +45,8 @@ export const createProduct = async (req: Request, res: Response) => {
 }
 
 export const all = async (req: Request, res: Response) => {
-    let products = await productsService.getAll();
+    const page = req.query.page;
+    let products = await productsService.getAll(page);
     if (products.error) {
         return res.status(501).send({ message: 'Internal Server Error' });
     }
@@ -54,7 +55,8 @@ export const all = async (req: Request, res: Response) => {
 
 export const getByQuery = async (req: Request, res: Response) => {
     let query = req.params.query;
-    let products = await productsService.searchProducts(query);
+    const page = req.query.page;
+    let products = await productsService.searchProducts(query, page);
     if (products.error) {
         res.status(501).send('Internal server error, try again later');
     }
@@ -63,12 +65,13 @@ export const getByQuery = async (req: Request, res: Response) => {
 
 export const getProductsByCategory = async (req: Request, res: Response) => {
     const category = req.params.category;
+    const page = req.query.page;
     if (!category) {
         return {
             error: 'Invalid or missing data !!'
         }
     }
-    const products = await productsService.getPodcutsByCategory(category);
+    const products = await productsService.getPodcutsByCategory(category, page);
     res.send({ products });
 }
 

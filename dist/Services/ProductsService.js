@@ -56,21 +56,33 @@ var ProductsService = /** @class */ (function () {
             });
         });
     };
-    ProductsService.prototype.getAll = function () {
+    ProductsService.prototype.getAll = function (page) {
         return __awaiter(this, void 0, void 0, function () {
+            var options;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, productsRepository.selectAll()];
+                    case 0:
+                        options = {
+                            page: parseInt(page) || 1,
+                            limit: 8
+                        };
+                        return [4 /*yield*/, productsRepository.selectAll({}, options)];
                     case 1: return [2 /*return*/, (_a.sent())];
                 }
             });
         });
     };
-    ProductsService.prototype.getPodcutsByCategory = function (category) {
+    ProductsService.prototype.getPodcutsByCategory = function (category, page) {
         return __awaiter(this, void 0, void 0, function () {
+            var options;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, productsRepository.selectAll({ category: category })];
+                    case 0:
+                        options = {
+                            page: parseInt(page) || 1,
+                            limit: 8
+                        };
+                        return [4 /*yield*/, productsRepository.selectAll({ category: category }, options)];
                     case 1: return [2 /*return*/, (_a.sent())];
                 }
             });
@@ -86,9 +98,9 @@ var ProductsService = /** @class */ (function () {
             });
         });
     };
-    ProductsService.prototype.searchProducts = function (query) {
+    ProductsService.prototype.searchProducts = function (query, page) {
         return __awaiter(this, void 0, void 0, function () {
-            var filter;
+            var filter, options;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -99,7 +111,11 @@ var ProductsService = /** @class */ (function () {
                                 { category: { $regex: query, $options: 'i' } },
                             ]
                         };
-                        return [4 /*yield*/, productsRepository.selectAll(filter)];
+                        options = {
+                            page: parseInt(page) || 1,
+                            limit: 8
+                        };
+                        return [4 /*yield*/, productsRepository.selectAll(filter, options)];
                     case 1: return [2 /*return*/, (_a.sent())];
                 }
             });

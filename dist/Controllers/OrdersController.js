@@ -70,10 +70,12 @@ var createOrder = function (req, res) { return __awaiter(void 0, void 0, void 0,
 }); };
 exports.createOrder = createOrder;
 var all = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var orders;
+    var page, orders;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, ordersService.getAll()];
+            case 0:
+                page = req.query.page;
+                return [4 /*yield*/, ordersService.getAll(page)];
             case 1:
                 orders = _a.sent();
                 res.send(orders);
@@ -83,12 +85,13 @@ var all = function (req, res) { return __awaiter(void 0, void 0, void 0, functio
 }); };
 exports.all = all;
 var getOrdersByUserId = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var userId, orders;
+    var page, userId, orders;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                page = req.query.page;
                 userId = req.params.user_id;
-                return [4 /*yield*/, ordersService.getOrdersByUserID(userId)];
+                return [4 /*yield*/, ordersService.getOrdersByUserID(userId, page)];
             case 1:
                 orders = _a.sent();
                 res.send(orders);

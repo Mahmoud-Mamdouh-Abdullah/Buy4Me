@@ -1,4 +1,5 @@
 import { Schema, model, mongo } from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 const OrderSchema = new Schema({
     products_list: [{
@@ -12,4 +13,6 @@ const OrderSchema = new Schema({
     updated_at: String
 });
 
-export const Order = model('Order', OrderSchema);
+OrderSchema.plugin(mongoosePaginate);
+
+export const Order: any = model('Order', OrderSchema);

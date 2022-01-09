@@ -70,7 +70,6 @@ var uploadUserImage = function (req, res) { return __awaiter(void 0, void 0, voi
             case 0:
                 id = req.params.id;
                 path = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
-                console.log(req.file);
                 if (!path) {
                     return [2 /*return*/, res.send({ error: 'Invalid or missing data !!' })];
                 }

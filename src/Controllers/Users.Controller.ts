@@ -20,7 +20,6 @@ export const createUser = async (req: Request, res: Response) => {
 export const uploadUserImage = async (req: Request, res: Response) => {
     const id = req.params.id;
     const path = req.file?.path;
-    console.log(req.file);
     if (!path) {
         return res.send({ error: 'Invalid or missing data !!' });
     }

@@ -9,8 +9,9 @@ const OrdersList = (props) => {
 
     const { authedUser, dispatch } = props;
     const [orders, setOrders] = useState({
-        orders: [],
-        count: 0
+        docs: [],
+        hasPrevPage: false,
+        hasNextPage: false
     });
 
 
@@ -19,39 +20,66 @@ const OrdersList = (props) => {
         const token = authedUser.data.token;
 
         dispatch(showLoading());
-        getUserOrders(token, id).then((orders) => {
-            setOrders(orders);
+        getUserOrders(token, id).then((data) => {
+            console.log(data.orders);
+            setOrders(data.orders);
             dispatch(hideLoading());
         }).catch(e => {
             alert(e.message);
         })
 
 
-    }, [authedUser.data.token, authedUser.data.user._id, dispatch])
+    }, [authedUser.data.token, authedUser.data.user._id, dispatch]);
+
+
+    const handlePrevPageClick = () => {
+        const id = authedUser.data.user._id;
+        const token = authedUser.data.token;
+
+        dispatch(showLoading());
+        getUserOrders(token, id, orders.prevPage).then((data) => {
+            setOrders(data.orders);
+            dispatch(hideLoading());
+        }).catch(e => {
+            alert(e.message);
+        });
+    }
+
+    const handleNextPageClick = () => {
+        const id = authedUser.data.user._id;
+        const token = authedUser.data.token;
+
+        dispatch(showLoading());
+        getUserOrders(token, id, orders.nextPage).then((data) => {
+            setOrders(data.orders);
+            dispatch(hideLoading());
+        }).catch(e => {
+            alert(e.message);
+        });
+    }
 
     return (
         <div className='orders-section'>
             <div className="orders-title-container">
                 <span className="orders-title">Your Orders</span>
-                <span className="orders-count">{orders.count} order(s)</span>
+                <span className="orders-count">{orders.docs.length} order(s)</span>
             </div>
-            {orders.orders.sort((a, b) => {
-                return (a.created_at < b.created_at) ? 1 : ((a.created_at > b.created_at) ? -1 : 0);
-            }).map(order => (
+            {orders.docs.map(order => (
                 <OrdersListItem order={order} />
             ))}
 
-            {orders.count > 3 && (
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center mt-4">
-                        <li class="page-item"><a class="page-link" href="/">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="/">1</a></li>
-                        <li class="page-item"><a class="page-link" href="/">2</a></li>
-                        <li class="page-item"><a class="page-link" href="/">3</a></li>
-                        <li class="page-item"><a class="page-link" href="/">Next</a></li>
+
+            {(orders.hasNextPage === false && orders.hasPrevPage === false) ? '' :
+                (<nav aria-label="Page navigation example">
+                    <ul class="gap-2 pagination justify-content-center mt-4">
+                        <li className={"page-item " + (orders.hasPrevPage ? '' : 'disabled')}>
+                            <button onClick={handlePrevPageClick} class="btn-none page-link">Previous</button>
+                        </li>
+                        <li className={"page-item " + (orders.hasNextPage ? '' : 'disabled')}>
+                            <button onClick={handleNextPageClick} class="btn-none page-link" href="/">Next</button>
+                        </li>
                     </ul>
-                </nav>
-            )}
+                </nav>)}
         </div>
     )
 }

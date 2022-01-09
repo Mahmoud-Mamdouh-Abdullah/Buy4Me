@@ -7,7 +7,9 @@ import { hideLoading, showLoading } from "react-redux-loading";
 
 const ProductsList = (props) => {
 
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState({
+        docs: []
+    });
     const params = useParams();
     const { dispatch } = props;
 
@@ -19,6 +21,23 @@ const ProductsList = (props) => {
         });
         window.scrollTo(0, 0);
     }, [dispatch, params.category_name]);
+
+
+    const handlePrevPageClick = () => {
+        getProductsByCategory(params.category_name, products.prevPage).then(data => {
+            setProducts(data.products);
+            dispatch(hideLoading());
+        });
+        window.scrollTo(0, 0);
+    }
+
+    const handleNextPageClick = () => {
+        getProductsByCategory(params.category_name, products.nextPage).then(data => {
+            setProducts(data.products);
+            dispatch(hideLoading());
+        });
+        window.scrollTo(0, 0);
+    }
 
     return (
         <div className="prdoucts-list-main">
@@ -32,20 +51,23 @@ const ProductsList = (props) => {
                 </li>
             </ul>
             <div className="products-list">
-                {products.map(product => (
+                {products.docs.map(product => (
                     <ProductItem category={params.category_name} product={product} />
                 ))}
             </div>
 
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item"><a class="page-link" href="/">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="/">1</a></li>
-                    <li class="page-item"><a class="page-link" href="/">2</a></li>
-                    <li class="page-item"><a class="page-link" href="/">3</a></li>
-                    <li class="page-item"><a class="page-link" href="/">Next</a></li>
-                </ul>
-            </nav>
+            {(products.hasPrevPage !== false || products.hasNextPage !== false) ? (
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li className={"page-item " + (products.hasPrevPage ? '' : 'disabled')}>
+                            <button onClick={handlePrevPageClick} class="btn-none page-link">Previous</button>
+                        </li>
+                        <li className={"page-item " + (products.hasNextPage ? '' : 'disabled')}>
+                            <button onClick={handleNextPageClick} class="btn-none page-link" href="/">Next</button>
+                        </li>
+                    </ul>
+                </nav>
+            ) : ''}
         </div>
     )
 }
