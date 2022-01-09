@@ -20,6 +20,7 @@ const ProductDetails = (props) => {
     const location = useLocation();
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         if (authedUser !== null) {
             let cartCheck = false;
             cart.productList.forEach(element => {
