@@ -49,7 +49,7 @@ const CartForm = (props) => {
                     <div className="items-count">total</div>
                     <div className="totalcost-container">
                         <div className="dollar-badge">$</div>
-                        <span>{cart.total.toFixed(2)}</span>
+                        <span>{cart.total}</span>
                     </div>
                 </div>
             </div>

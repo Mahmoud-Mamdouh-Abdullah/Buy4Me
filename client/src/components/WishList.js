@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const WishList = (props) => {
 
     const { wishlist } = props;
-    const productsList = wishlist.products_list;
+    const productsList = wishlist.products_list || [];
 
     return (
         <div className="app-font main-wishList">
@@ -19,6 +19,9 @@ const WishList = (props) => {
             <span className="wishlist-title">WishList</span>
             <span className="wishlist-count">{productsList.length} Item(s)</span>
 
+            {productsList.length === 0 && (
+                <div style={{ height: '300px' }} className="text-secondary fw-bold d-flex justify-content-center align-items-center">No Items Found</div>
+            )}
             <div className="wishlist-items-div">
                 {productsList.map(product => (
                     <WishListItem id={product._id} />

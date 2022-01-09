@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { BsPersonFill } from 'react-icons/bs';
 import { RiLockPasswordFill } from 'react-icons/ri';
@@ -12,8 +12,11 @@ const Login = (props) => {
     const { dispatch, authedUser } = props;
     const navigate = useNavigate();
 
-    
-    (authedUser !== null && navigate('/'));
+
+
+    useEffect(() => {
+        (authedUser !== null && navigate('/'));
+    }, [authedUser, navigate]);
 
     const handleInputChange = (e) => {
         switch (e.target.name) {

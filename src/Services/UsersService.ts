@@ -4,7 +4,7 @@ import { CartRepository } from "../Data/Repositories/CartRepository";
 import { WishRepository } from "../Data/Repositories/WishRepository";
 import { UsersRepository } from "../Data/Repositories/UsersRepository";
 import { Wish } from "../Data/Models/Wish.Model";
-
+import fs from 'fs';
 
 const userRepo = new UsersRepository();
 const cartRepository = new CartRepository();
@@ -100,5 +100,21 @@ export class UsersService {
         if (user === null || user.error)
             return false;
         return true;
+    }
+
+    async uploadImage(_id: string, path: string) {
+        const user = (await userRepo.updateOne(_id, { imgUrl: path }));
+        if (user.imgUrl !== null) {
+            fs.unlinkSync(user.imgUrl);
+        }
+        return (await userRepo.selectOne({ _id }));
+    }
+
+    async updateData(_id: string, data: Object) {
+        (await userRepo.updateOne(_id, {
+            ...data,
+            updated_at: new Date().toISOString()
+        }));
+        return (await userRepo.selectOne({ _id }));
     }
 }

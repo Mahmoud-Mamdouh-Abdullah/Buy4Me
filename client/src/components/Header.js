@@ -1,20 +1,22 @@
 import React from 'react';
 import { FiShoppingCart } from 'react-icons/fi';
 import { GiShoppingBag } from 'react-icons/gi';
-import { BsPersonCircle } from 'react-icons/bs';
 import { MdLogout } from 'react-icons/md';
 import { connect } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { removeAuthedUserAction } from '../redux/actions/authedUser';
-
+import defaultImage from '../assets/images/default_user_white.png';
+import { BASE_URL } from '../utils/api';
 
 const Header = (props) => {
 
     const { authedUser, cart, dispatch } = props;
     const location = useLocation();
+    const navigate = useNavigate();
 
     const handleLogoutClick = () => {
         dispatch(removeAuthedUserAction());
+        navigate('/login');
     }
 
     return (
@@ -67,7 +69,14 @@ const Header = (props) => {
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false"
                                     className='btn-none text-white ms-4 d-flex justify-content-center align-items-center gap-3'>
-                                    <BsPersonCircle size={30} />
+                                    <img
+                                        className='fit-image'
+                                        style={{ border: '1px solid #6c6c6c', borderRadius: '20px', padding: '3px' }}
+                                        src={(authedUser.data.user.imgUrl === null) ? defaultImage :
+                                            (BASE_URL + authedUser.data.user.imgUrl)}
+                                        alt='default'
+                                        width='30px'
+                                        height='30px' />
                                     <span className='header-profile-name'>{authedUser.data.user.name}</span>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -78,12 +87,12 @@ const Header = (props) => {
                                         <Link to='/wishlist' class="dropdown-item app-font">WishList</Link>
                                     </li>
                                     <li>
-                                        <Link to='/' class="dropdown-item app-font">My Profile</Link>
+                                        <Link to='/profile' class="dropdown-item app-font">My Profile</Link>
                                     </li>
                                 </ul>
                             </div>
                             <button onClick={handleLogoutClick} className='btn-none'>
-                                <MdLogout size={30} />
+                                <MdLogout size={25} />
                             </button>
                         </li>
                     )}

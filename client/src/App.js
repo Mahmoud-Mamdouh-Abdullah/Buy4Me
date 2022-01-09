@@ -18,6 +18,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import OrdersList from './components/OrdersList';
 import OrderDetails from './components/OrderDetails';
 import WishList from './components/WishList';
+import Profile from './components/Profile';
 
 function App() {
 
@@ -79,6 +80,10 @@ function App() {
 
         <Route path='/wishlist' element={
           <ProtectedRoute component={WishList} />
+        } />
+
+        <Route path='/profile' element={
+          <ProtectedRoute component={Profile} />
         } />
 
         <Route path="/*" element={

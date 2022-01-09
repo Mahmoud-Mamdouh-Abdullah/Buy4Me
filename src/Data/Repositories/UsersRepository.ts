@@ -35,4 +35,15 @@ export class UsersRepository {
             };
         }
     }
+
+    async updateOne(_id: string, filter: Object = {}) {
+        try {
+            await ConnectToMongo();
+            return (await User.findOneAndUpdate({ _id }, filter));
+        } catch (e: any) {
+            return {
+                error: e.message
+            };
+        }
+    }
 }

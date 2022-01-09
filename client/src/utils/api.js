@@ -36,6 +36,38 @@ export const register = async (userObject) => {
     }
 }
 
+export const uploadImage = async (id, imageFile) => {
+    let formData = new FormData();
+    formData.append('imgUrl', imageFile);
+    console.log(imageFile);
+    try {
+        const res = await fetch(BASE_URL + `users/uploadImg/${id}`, {
+            method: 'PUT',
+            body: formData
+        })
+
+        return await res.json();
+    } catch (e) {
+        return e.message;
+    }
+}
+
+export const updataUserData = async (id, data) => {
+    try {
+        const res = await fetch(BASE_URL + `users/update/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        return (await res.json());
+    } catch (e) {
+        return e.message;
+    }
+}
+
 export const getCategories = async () => {
     try {
         const res = await fetch(BASE_URL + 'categories', {

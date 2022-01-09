@@ -7,7 +7,8 @@ const UserSchema = new Schema({
     password: String,
     address: String,
     created_at: String,
-    updated_at: String
+    updated_at: String,
+    imgUrl: String
 });
 
 export const User: any = model('User', UserSchema);

@@ -111,6 +111,29 @@ var UsersRepository = /** @class */ (function () {
             });
         });
     };
+    UsersRepository.prototype.updateOne = function (_id, filter) {
+        if (filter === void 0) { filter = {}; }
+        return __awaiter(this, void 0, void 0, function () {
+            var e_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, (0, ConnectToMongo_1.ConnectToMongo)()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, User_Model_1.User.findOneAndUpdate({ _id: _id }, filter)];
+                    case 2: return [2 /*return*/, (_a.sent())];
+                    case 3:
+                        e_4 = _a.sent();
+                        return [2 /*return*/, {
+                                error: e_4.message
+                            }];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
     return UsersRepository;
 }());
 exports.UsersRepository = UsersRepository;

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { FaFacebookF, FaTwitter } from "react-icons/fa";
 import { BsCart2, BsHeart, BsHeartFill } from 'react-icons/bs';
 import { MdRemoveShoppingCart } from 'react-icons/md';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/api";
 import { connect } from "react-redux";
 import { handleUpdateCartAction } from '../redux/actions/cart';
+import { handleUpdateWishListAction } from "../redux/actions/wishlist";
 
 
 
@@ -15,6 +16,8 @@ const ProductDetails = (props) => {
     const { authedUser, cart, wishlist, dispatch } = props;
     const [inCart, setInCart] = useState(false);
     const { product, path } = useLocation().state;
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         if (authedUser !== null) {
@@ -43,19 +46,47 @@ const ProductDetails = (props) => {
 
 
     const handleAddToCart = () => {
-        const id = authedUser.data.user._id;
-        const token = authedUser.data.token;
-        let newCart = [...cart.productList, { _id: product._id, qty: 1 }];
-        dispatch(handleUpdateCartAction(id, { products_list: newCart }, token));
+        if (authedUser === null) {
+            navigate('/login');
+        } else {
+            const id = authedUser.data.user._id;
+            const token = authedUser.data.token;
+            let newCart = [...cart.productList, { _id: product._id, qty: 1 }];
+            dispatch(handleUpdateCartAction(id, { products_list: newCart }, token));
+        }
     }
 
     const handleRemoveFromCart = () => {
-        const id = authedUser.data.user._id;
-        const token = authedUser.data.token;
-        let newCart = cart.productList.filter((item) => (
-            item._id !== product._id
-        ));
-        dispatch(handleUpdateCartAction(id, { products_list: newCart }, token));
+        if (authedUser === null) {
+            navigate('/login');
+        } else {
+            const id = authedUser.data.user._id;
+            const token = authedUser.data.token;
+            let newCart = cart.productList.filter((item) => (
+                item._id !== product._id
+            ));
+            dispatch(handleUpdateCartAction(id, { products_list: newCart }, token));
+        }
+    }
+
+    const handleLoveClick = (e) => {
+        if (authedUser === null) {
+            console.log(location.pathname);
+            navigate('/login');
+        } else {
+            let token = authedUser.data.token;
+            let id = authedUser.data.user._id;
+            console.log(token);
+            if (isLiked) {
+                let newWishList = wishlist.products_list.filter(item => (
+                    (item._id !== product._id)
+                ));
+                dispatch(handleUpdateWishListAction(id, { products_list: newWishList }, token));
+            } else {
+                let newWishList = [...wishlist.products_list, { _id: product._id }];
+                dispatch(handleUpdateWishListAction(id, { products_list: newWishList }, token));
+            }
+        }
     }
 
     const formatTitle = (title) => {
@@ -110,7 +141,9 @@ const ProductDetails = (props) => {
                                 <span className="datails-product-title">{product.title}</span>
                                 <span className="details-brand-name">{product.brandName}</span>
                             </div>
-                            <button className="btn-none">
+                            <button
+                                onClick={handleLoveClick}
+                                className="btn-none">
                                 {isLiked ? <BsHeartFill size={25} color="red" />
                                     : <BsHeart size={25} />}
                             </button>
@@ -126,7 +159,7 @@ const ProductDetails = (props) => {
                             ) : product.description
                         }</span>
 
-                        {(!inCart && authedUser !== null) && (
+                        {(!inCart) && (
                             <button
                                 onClick={handleAddToCart}
                                 className="details-add-cart">ADD TO CART
@@ -135,7 +168,7 @@ const ProductDetails = (props) => {
                         )}
 
 
-                        {(inCart && authedUser !== null) && (
+                        {(inCart) && (
                             <button
                                 onClick={handleRemoveFromCart}
                                 className="details-add-cart">REMOVE FROM CART

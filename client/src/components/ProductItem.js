@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { handleUpdateWishListAction } from "../redux/actions/wishlist";
 import { BASE_URL } from "../utils/api";
 
@@ -10,6 +10,7 @@ const ProductItem = (props) => {
 
     const [isLiked, setLiked] = useState(0);
     const navigate = useNavigate();
+    const location = useLocation();
     const { product, category, authedUser, wishlist, dispatch } = props;
 
 
@@ -29,17 +30,22 @@ const ProductItem = (props) => {
     }, [authedUser, product._id, wishlist]);
 
     const handleLoveClick = (e) => {
-        let token = authedUser.data.token;
-        let id = authedUser.data.user._id;
-        console.log(token);
-        if (isLiked) {
-            let newWishList = wishlist.products_list.filter(item => (
-                (item._id !== product._id)
-            ));
-            dispatch(handleUpdateWishListAction(id, { products_list: newWishList }, token));
+        if (authedUser === null) {
+            console.log(location.pathname);
+            navigate('/login');
         } else {
-            let newWishList = [...wishlist.products_list, { _id: product._id }];
-            dispatch(handleUpdateWishListAction(id, { products_list: newWishList }, token));
+            let token = authedUser.data.token;
+            let id = authedUser.data.user._id;
+            console.log(token);
+            if (isLiked) {
+                let newWishList = wishlist.products_list.filter(item => (
+                    (item._id !== product._id)
+                ));
+                dispatch(handleUpdateWishListAction(id, { products_list: newWishList }, token));
+            } else {
+                let newWishList = [...wishlist.products_list, { _id: product._id }];
+                dispatch(handleUpdateWishListAction(id, { products_list: newWishList }, token));
+            }
         }
     }
 
@@ -76,7 +82,7 @@ const ProductItem = (props) => {
             <button
                 className="product-love-icon"
                 onClick={handleLoveClick}>
-                {isLiked ? (<BsHeartFill color="red" size={24} />) : <BsHeart color="#141414" size={24} />}
+                {(isLiked) ? (<BsHeartFill color="red" size={24} />) : <BsHeart color="#141414" size={24} />}
             </button>
         </div>
     )

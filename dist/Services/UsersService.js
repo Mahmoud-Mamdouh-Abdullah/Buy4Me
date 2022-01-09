@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,6 +46,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersService = void 0;
 var Encryptor_1 = require("./Encryptor");
@@ -43,6 +57,7 @@ var CartRepository_1 = require("../Data/Repositories/CartRepository");
 var WishRepository_1 = require("../Data/Repositories/WishRepository");
 var UsersRepository_1 = require("../Data/Repositories/UsersRepository");
 var Wish_Model_1 = require("../Data/Models/Wish.Model");
+var fs_1 = __importDefault(require("fs"));
 var userRepo = new UsersRepository_1.UsersRepository();
 var cartRepository = new CartRepository_1.CartRepository();
 var wishRepository = new WishRepository_1.WishRepository();
@@ -214,6 +229,36 @@ var UsersService = /** @class */ (function () {
                         if (user === null || user.error)
                             return [2 /*return*/, false];
                         return [2 /*return*/, true];
+                }
+            });
+        });
+    };
+    UsersService.prototype.uploadImage = function (_id, path) {
+        return __awaiter(this, void 0, void 0, function () {
+            var user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, userRepo.updateOne(_id, { imgUrl: path })];
+                    case 1:
+                        user = (_a.sent());
+                        if (user.imgUrl !== null) {
+                            fs_1.default.unlinkSync(user.imgUrl);
+                        }
+                        return [4 /*yield*/, userRepo.selectOne({ _id: _id })];
+                    case 2: return [2 /*return*/, (_a.sent())];
+                }
+            });
+        });
+    };
+    UsersService.prototype.updateData = function (_id, data) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, userRepo.updateOne(_id, __assign(__assign({}, data), { updated_at: new Date().toISOString() }))];
+                    case 1:
+                        (_a.sent());
+                        return [4 /*yield*/, userRepo.selectOne({ _id: _id })];
+                    case 2: return [2 /*return*/, (_a.sent())];
                 }
             });
         });

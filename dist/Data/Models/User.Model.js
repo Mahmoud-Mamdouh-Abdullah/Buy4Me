@@ -8,6 +8,7 @@ var UserSchema = new mongoose_1.Schema({
     password: String,
     address: String,
     created_at: String,
-    updated_at: String
+    updated_at: String,
+    imgUrl: String
 });
 exports.User = (0, mongoose_1.model)('User', UserSchema);

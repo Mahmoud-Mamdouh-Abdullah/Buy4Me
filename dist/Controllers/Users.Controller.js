@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserById = exports.all = exports.createUser = void 0;
+exports.getUserById = exports.all = exports.updateUserData = exports.uploadUserImage = exports.createUser = void 0;
 var User_Model_1 = require("../Data/Models/User.Model");
 var UsersService_1 = require("../Services/UsersService");
 var usersService = new UsersService_1.UsersService();
@@ -49,7 +49,7 @@ var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 if (!name || !email || !password || !address) {
                     return [2 /*return*/, res.send({ message: "some data is missing" })];
                 }
-                user = new User_Model_1.User({ name: name, email: email, password: password, address: address });
+                user = new User_Model_1.User({ name: name, email: email, password: password, address: address, imgUrl: null });
                 return [4 /*yield*/, usersService.create(user)];
             case 1:
                 result = _b.sent();
@@ -62,6 +62,46 @@ var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.createUser = createUser;
+var uploadUserImage = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, path, result;
+    var _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                id = req.params.id;
+                path = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
+                console.log(req.file);
+                if (!path) {
+                    return [2 /*return*/, res.send({ error: 'Invalid or missing data !!' })];
+                }
+                return [4 /*yield*/, usersService.uploadImage(id, path)];
+            case 1:
+                result = (_b.sent());
+                res.send(result);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.uploadUserImage = uploadUserImage;
+var updateUserData = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, data, _a, _b;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
+            case 0:
+                id = req.params.id;
+                data = req.body;
+                if (!data.name || !data.email || !data.address) {
+                    res.send({ error: 'Invalid or missing data !!' });
+                }
+                _b = (_a = res).send;
+                return [4 /*yield*/, usersService.updateData(id, data)];
+            case 1:
+                _b.apply(_a, [_c.sent()]);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.updateUserData = updateUserData;
 var all = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var users;
     return __generator(this, function (_a) {
