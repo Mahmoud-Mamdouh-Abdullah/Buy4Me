@@ -34,13 +34,13 @@ const Header = (props) => {
                         <Link to="/" className="nav-link text-white">Home</Link>
                     </li>
                     <li className="nav-item hide-sm">
-                        <a href="/#Categories" className="nav-link text-white">Categories</a>
+                        <Link to="/#Categories" className="nav-link text-white">Categories</Link>
                     </li>
                     <li className="nav-item hide-sm">
-                        <a href="/#contact-us" className="nav-link text-white">Contact us</a>
+                        <Link to="/#contact-us" className="nav-link text-white">Contact us</Link>
                     </li>
                     <li className="nav-item hide-sm">
-                        <a href="/#footer" className="nav-link text-white">About</a>
+                        <Link to="/#footer" className="nav-link text-white">About</Link>
                     </li>
 
                     {authedUser !== null && (
